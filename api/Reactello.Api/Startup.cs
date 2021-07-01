@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,9 +8,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Reactello.Application;
+using Reactello.Application.Handlers.Boards;
+using Reactello.Data.EntityFramework;
+using Reactello.EntityFramework.SqlServer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Reactello.Api
@@ -26,6 +32,11 @@ namespace Reactello.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddEntityFrameworkSqlServer(Configuration);
+            services.AddDataEntityFramework();
+            services.AddMediatR(typeof(CreateBoardHandler).Assembly);
+            services.AddApplication();
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

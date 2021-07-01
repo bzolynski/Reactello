@@ -12,8 +12,4 @@
     <ProjectReference Include="..\Reactello.Data.EntityFramework\Reactello.Data.EntityFramework.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Configuration\" />
-  </ItemGroup>
-
 </Project>

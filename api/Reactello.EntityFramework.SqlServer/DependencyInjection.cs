@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Reactello.Data.EntityFramework;
+using Reactello.Data.EntityFramework.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,7 @@ namespace Reactello.EntityFramework.SqlServer
         public static void AddEntityFrameworkSqlServer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<SqlServerDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("SqlServer")));
+            services.AddScoped<IApplicationDbContext, SqlServerDbContext>();
         }
     }
 }

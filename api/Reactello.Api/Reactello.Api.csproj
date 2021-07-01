@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -13,7 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Reactello.Application\Reactello.Application.csproj" />
+    <ProjectReference Include="..\Reactello.Data\Reactello.Data.csproj" />
+    <ProjectReference Include="..\Reactello.Domain\Reactello.Domain.csproj" />
+    <ProjectReference Include="..\Reactello.EntityFramework.SqlServer\Reactello.EntityFramework.SqlServer.csproj" />
   </ItemGroup>
 
 </Project>
