@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Reactello.Data.Interfaces.Repositories
 {
-    public interface ICardRepository : IRepository<Card>
+    public interface INoteRepository : IRepository<Note>
     {
     }
 }

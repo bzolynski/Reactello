@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Reactello.Application.Dtos.Cards
+﻿namespace Reactello.Application.Dtos.Notes
 {
-    public class UpdateCardDto
+    public class UpdateNoteDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

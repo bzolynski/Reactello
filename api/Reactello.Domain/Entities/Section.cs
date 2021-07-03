@@ -10,12 +10,12 @@ namespace Reactello.Domain.Entities
     {
         public Section()
         {
-            Cards = new HashSet<Card>();
+            Notes = new HashSet<Note>();
         }
         public string Name { get; set; }
         public string Color { get; set; }
         public int Position { get; set; }
-        public ICollection<Card> Cards { get; private set; }
+        public ICollection<Note> Notes { get; private set; }
 
         public Board Board { get; set; }
     }

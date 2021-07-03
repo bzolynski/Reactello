@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Reactello.Data.EntityFramework.Repositories
 {
-    public class CardRepository : RepositoryBase<Card>, ICardRepository
+    public class NoteRepository : RepositoryBase<Note>, INoteRepository
     {
-        public CardRepository(IApplicationDbContext dbContext) : base(dbContext)
+        public NoteRepository(IApplicationDbContext dbContext) : base(dbContext)
         {
         }
     }

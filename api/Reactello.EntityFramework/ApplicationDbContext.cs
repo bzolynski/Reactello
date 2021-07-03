@@ -16,7 +16,7 @@ namespace Reactello.EntityFramework
 
         public DbSet<Board> Boards { get; set; }
         public DbSet<Section> Sections { get; set; }
-        public DbSet<Card> Cards { get; set; }
+        public DbSet<Note> Notes { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
         async public Task<bool> Commit()

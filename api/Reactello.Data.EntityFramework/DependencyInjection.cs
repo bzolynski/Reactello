@@ -14,7 +14,7 @@ namespace Reactello.Data.EntityFramework
         public static void AddDataEntityFramework(this IServiceCollection services)
         {
             services.AddScoped<IBoardRepository, BoardRepository>();
-            services.AddScoped<ICardRepository, CardRepository>();
+            services.AddScoped<INoteRepository, NoteRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<ISectionRepository, SectionRepository>();
         }

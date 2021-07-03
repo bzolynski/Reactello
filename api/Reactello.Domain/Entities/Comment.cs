@@ -14,6 +14,6 @@ namespace Reactello.Domain.Entities
         public DateTime CreateTime { get; set; }
         public DateTime EditTime { get; set; } 
 
-        public Card Card { get; set; }
+        public Note Note { get; set; }
     }
 }

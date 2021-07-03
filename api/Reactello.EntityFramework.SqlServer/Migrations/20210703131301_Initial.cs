@@ -45,20 +45,21 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cards",
+                name: "Notes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Position = table.Column<int>(type: "int", nullable: false),
                     SectionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cards", x => x.Id);
+                    table.PrimaryKey("PK_Notes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cards_Sections_SectionId",
+                        name: "FK_Notes_Sections_SectionId",
                         column: x => x.SectionId,
                         principalTable: "Sections",
                         principalColumn: "Id",
@@ -75,29 +76,29 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
                     UpVotes = table.Column<int>(type: "int", nullable: false),
                     DownVotes = table.Column<int>(type: "int", nullable: false),
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    WasEdited = table.Column<bool>(type: "bit", nullable: false),
-                    CardId = table.Column<int>(type: "int", nullable: true)
+                    EditTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NoteId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comments_Cards_CardId",
-                        column: x => x.CardId,
-                        principalTable: "Cards",
+                        name: "FK_Comments_Notes_NoteId",
+                        column: x => x.NoteId,
+                        principalTable: "Notes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cards_SectionId",
-                table: "Cards",
-                column: "SectionId");
+                name: "IX_Comments_NoteId",
+                table: "Comments",
+                column: "NoteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_CardId",
-                table: "Comments",
-                column: "CardId");
+                name: "IX_Notes_SectionId",
+                table: "Notes",
+                column: "SectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sections_BoardId",
@@ -111,7 +112,7 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "Cards");
+                name: "Notes");
 
             migrationBuilder.DropTable(
                 name: "Sections");

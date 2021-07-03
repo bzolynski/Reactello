@@ -10,7 +10,7 @@ using Reactello.EntityFramework.SqlServer;
 namespace Reactello.EntityFramework.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerDbContext))]
-    [Migration("20210629165356_Initial")]
+    [Migration("20210703131301_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,7 +42,39 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
                     b.ToTable("Boards");
                 });
 
-            modelBuilder.Entity("Reactello.Domain.Entities.Card", b =>
+            modelBuilder.Entity("Reactello.Domain.Entities.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DownVotes")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EditTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("NoteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UpVotes")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NoteId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Reactello.Domain.Entities.Note", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,6 +83,9 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
 
                     b.Property<int?>("SectionId")
                         .HasColumnType("int");
@@ -62,39 +97,7 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("Cards");
-                });
-
-            modelBuilder.Entity("Reactello.Domain.Entities.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CardId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DownVotes")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UpVotes")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("WasEdited")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CardId");
-
-                    b.ToTable("Comments");
+                    b.ToTable("Notes");
                 });
 
             modelBuilder.Entity("Reactello.Domain.Entities.Section", b =>
@@ -123,22 +126,22 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
                     b.ToTable("Sections");
                 });
 
-            modelBuilder.Entity("Reactello.Domain.Entities.Card", b =>
+            modelBuilder.Entity("Reactello.Domain.Entities.Comment", b =>
+                {
+                    b.HasOne("Reactello.Domain.Entities.Note", "Note")
+                        .WithMany("Comments")
+                        .HasForeignKey("NoteId");
+
+                    b.Navigation("Note");
+                });
+
+            modelBuilder.Entity("Reactello.Domain.Entities.Note", b =>
                 {
                     b.HasOne("Reactello.Domain.Entities.Section", "Section")
-                        .WithMany("Cards")
+                        .WithMany("Notes")
                         .HasForeignKey("SectionId");
 
                     b.Navigation("Section");
-                });
-
-            modelBuilder.Entity("Reactello.Domain.Entities.Comment", b =>
-                {
-                    b.HasOne("Reactello.Domain.Entities.Card", "Card")
-                        .WithMany("Comments")
-                        .HasForeignKey("CardId");
-
-                    b.Navigation("Card");
                 });
 
             modelBuilder.Entity("Reactello.Domain.Entities.Section", b =>
@@ -155,14 +158,14 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
                     b.Navigation("Sections");
                 });
 
-            modelBuilder.Entity("Reactello.Domain.Entities.Card", b =>
+            modelBuilder.Entity("Reactello.Domain.Entities.Note", b =>
                 {
                     b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("Reactello.Domain.Entities.Section", b =>
                 {
-                    b.Navigation("Cards");
+                    b.Navigation("Notes");
                 });
 #pragma warning restore 612, 618
         }

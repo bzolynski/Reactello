@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using Reactello.Application.Dtos.Boards;
+using Reactello.Application.Dtos.Notes;
 
 namespace Reactello.Application.Queries
 {
-    public class GetBoardQuery : IRequest<BoardDto>
+    public class GetNoteQuery : IRequest<NoteDto>
     {
-        public GetBoardQuery(int id)
+        public GetNoteQuery(int id)
         {
             Id = id;
         }

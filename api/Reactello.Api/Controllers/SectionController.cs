@@ -4,7 +4,6 @@ using Reactello.Application.Dtos.Sections;
 using Reactello.Application.Queries;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Reactello.Api.Controllers

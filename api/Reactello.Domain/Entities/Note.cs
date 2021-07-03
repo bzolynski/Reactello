@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Reactello.Domain.Entities
 {
-    public class Card : EntityBase
+    public class Note : EntityBase
     {
-        public Card()
+        public Note()
         {
             Comments = new HashSet<Comment>();
         }

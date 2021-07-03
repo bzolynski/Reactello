@@ -13,8 +13,8 @@ namespace Reactello.EntityFramework.Configuration
     {
         public void Configure(EntityTypeBuilder<Section> builder)
         {
-            builder.HasMany(s => s.Cards)
-                .WithOne(c => c.Section)
+            builder.HasMany(s => s.Notes)
+                .WithOne(n => n.Section)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

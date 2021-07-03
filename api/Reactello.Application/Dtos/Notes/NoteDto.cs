@@ -1,13 +1,9 @@
 ﻿using Reactello.Application.Dtos.Comments;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Reactello.Application.Dtos.Cards
+namespace Reactello.Application.Dtos.Notes
 {
-    public class CardDto
+    public class NoteDto
     {
         public string Title { get; set; }
         public string Description { get; set; }

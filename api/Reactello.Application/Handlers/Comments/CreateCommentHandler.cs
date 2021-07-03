@@ -4,10 +4,6 @@ using Reactello.Application.Commands.Comments;
 using Reactello.Application.Dtos.Comments;
 using Reactello.Data.Interfaces.Repositories;
 using Reactello.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
