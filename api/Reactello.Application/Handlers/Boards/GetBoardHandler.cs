@@ -20,7 +20,7 @@ namespace Reactello.Application.Handlers.Boards
         }
         public async Task<BoardDto> Handle(GetBoardQuery request, CancellationToken cancellationToken)
         {
-            var board = await _boardRepository.Get(request.Id);
+            var board = await _boardRepository.GetWithSectionsAndNotes(request.Id);
             return _mapper.Map<BoardDto>(board);
         }
     }

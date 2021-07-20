@@ -17,6 +17,7 @@ namespace Reactello.Domain.Entities
         public int Position { get; set; }
         public ICollection<Note> Notes { get; private set; }
 
+        public int BoardId { get; set; }
         public Board Board { get; set; }
     }
 }

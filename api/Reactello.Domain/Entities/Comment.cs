@@ -12,8 +12,9 @@ namespace Reactello.Domain.Entities
         public int UpVotes { get; set; }
         public int DownVotes { get; set; }
         public DateTime CreateTime { get; set; }
-        public DateTime EditTime { get; set; } 
+        public DateTime EditTime { get; set; }
 
+        public int NoteId { get; set; }
         public Note Note { get; set; }
     }
 }
