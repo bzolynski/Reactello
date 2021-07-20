@@ -28,8 +28,17 @@ namespace Reactello.Api
             services.AddDataEntityFramework();
             services.AddMediatR(typeof(CreateBoardHandler).Assembly);
             services.AddApplication();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                    //.WithOrigins("http://localhost:3000", "https://localhost:3000");
 
-
+                });
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -48,9 +57,8 @@ namespace Reactello.Api
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.UseCors();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
