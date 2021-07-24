@@ -15,6 +15,7 @@ namespace Reactello.EntityFramework.Configuration
         {
             builder.HasMany(s => s.Notes)
                 .WithOne(n => n.Section)
+                .HasForeignKey(n => n.SectionId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

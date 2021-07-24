@@ -2,9 +2,9 @@ import { Box, CircularProgress, Grid, Typography } from '@material-ui/core';
 import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getBoard } from 'src/store/actions/boardActions';
-import { BoardState } from 'src/store/reducers/boardReducer';
-import { Store } from 'src/store/reducers/reducers';
+import { getBoard } from '../store/actions/boardActions';
+import { BoardState } from '../store/reducers/boardReducer';
+import { Store } from '../store/reducers/reducers';
 import Board from '../components/Board';
 
 type GetBoard = ReturnType<typeof getBoard>;

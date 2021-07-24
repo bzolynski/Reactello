@@ -16,7 +16,7 @@ import StarIcon from '@material-ui/icons/Star';
 import ShareIcon from '@material-ui/icons/ShareOutlined';
 import { FC } from 'react';
 import tempBG from '../assets/tempBG.jpg';
-import { BoardListing } from 'src/models/board';
+import { BoardListing } from '../models/board';
 import PlainLink from './PlainLink';
 
 const useStyles = makeStyles((theme: Theme) =>

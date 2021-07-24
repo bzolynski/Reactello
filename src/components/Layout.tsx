@@ -5,11 +5,11 @@ import TopBar from './TopBar';
 const Layout: FC = ({ children }) => {
 	return (
 		<div>
-			<Container>
-				<TopBar />
-				<Toolbar />
+		<Container>
+			<TopBar />
+			<Toolbar />
 				{children}
-			</Container>
+		</Container>
 		</div>
 	);
 };

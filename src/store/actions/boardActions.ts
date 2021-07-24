@@ -1,6 +1,6 @@
 import { BoardPage, BoardListing } from '../../models/board';
 import { Dispatch } from 'redux';
-import dataService from 'src/services/dataService';
+import dataService from '../../services/dataService';
 import * as actionTypes from '../actionTypes/boardActionTypes';
 
 export const getBoards = (): Promise<BoardListing[]> =>

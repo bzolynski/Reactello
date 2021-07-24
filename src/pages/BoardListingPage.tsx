@@ -14,14 +14,14 @@ import {
 import { FC, useEffect } from 'react';
 import BoardCard from '../components/BoardCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoards } from 'src/store/actions/boardActions';
+import { getBoards } from '../store/actions/boardActions';
 import { Store } from '../store/reducers/reducers';
-import { BoardState } from 'src/store/reducers/boardReducer';
+import { BoardState } from '../store/reducers/boardReducer';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import BoardForm from '../components/BoardForm';
 import RouterModal from '../components/RouterModal';
 import AddIcon from '@material-ui/icons/Add';
-import { openModal } from 'src/store/actions/modalActions';
+import { openModal } from '../store/actions/modalActions';
 
 type GetBoards = ReturnType<typeof getBoards>;
 type OpenModal = ReturnType<typeof openModal>;

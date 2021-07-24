@@ -6,7 +6,7 @@ import CheckboxInput from './form/CheckboxInput';
 import TextInput from './form/TextInput';
 import Form from './form/Form';
 import { useParams } from 'react-router-dom';
-import dataService from 'src/services/dataService';
+import dataService from '../services/dataService';
 
 const initialBoard: BoardFormModel = {
 	isPublic: false,

@@ -1,3 +1,4 @@
+import { Card, CardMedia, Paper } from '@material-ui/core';
 import { FC } from 'react';
 import { BoardPage as BoardModel } from '../models/board';
 import Section from '../components/Section';
@@ -17,7 +18,7 @@ const Board: FC<Props> = ({ board }) => {
 	return (
 		<Box className={classes.root} display="flex">
 			{board.sections.map((section) => {
-				return (
+	return (
 					<Box key={section.id}>
 						<Section section={section} />
 					</Box>

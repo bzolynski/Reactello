@@ -16,7 +16,8 @@ namespace Reactello.Domain.Entities
         public string Description { get; set; }
         public int Position { get; set; }
         public ICollection<Comment> Comments { get; private set; }
-
+       
+        public int SectionId { get; set; }
         public Section Section { get; set; }
     }
 }
