@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Routing.Template;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,8 +29,16 @@ namespace Reactello.Api
             services.AddDataEntityFramework();
             services.AddMediatR(typeof(CreateBoardHandler).Assembly);
             services.AddApplication();
-
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyMethod()
+                        .AllowAnyHeader()
+                        //.WithOrigins("http://localhost:3000", "https://localhost:3000");
+                        .AllowAnyOrigin();
+                });
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -48,14 +57,23 @@ namespace Reactello.Api
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.UseCors("CorsPolicy");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                /*endpoints.MapControllerRoute(
+                    name: "default", 
+                    pattern: "{controller=Home}/{action=Index}/{id?}");*/
+                endpoints.MapControllerRoute(
+                    name: "ReactelloApiController",
+                    pattern: "api/{controller}/{id?}");
+                /*endpoints.MapControllerRoute(
+                    name: "ReactelloApiControllerIndex",
+                    pattern: "api/{controller}/{action}/{id?}");*/
+
+                //endpoints.MapDefaultControllerRoute();
             });
         }
     }

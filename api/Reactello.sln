@@ -9,13 +9,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reactello.Domain", "Reactel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reactello.Application", "Reactello.Application\Reactello.Application.csproj", "{3DDAE6CE-EE87-44DE-81F0-B632DC4A312A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactello.Data", "Reactello.Data\Reactello.Data.csproj", "{3F5F125C-44C7-4411-AFE9-FBF31FDB4914}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reactello.Data", "Reactello.Data\Reactello.Data.csproj", "{3F5F125C-44C7-4411-AFE9-FBF31FDB4914}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactello.EntityFramework.SqlServer", "Reactello.EntityFramework.SqlServer\Reactello.EntityFramework.SqlServer.csproj", "{ECEAEEAA-F886-449A-8C94-4EA2D6324AE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reactello.EntityFramework.SqlServer", "Reactello.EntityFramework.SqlServer\Reactello.EntityFramework.SqlServer.csproj", "{ECEAEEAA-F886-449A-8C94-4EA2D6324AE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactello.EntityFramework", "Reactello.EntityFramework\Reactello.EntityFramework.csproj", "{B3B1B8E5-BBC1-472C-ACC0-E9A88A2F11D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reactello.EntityFramework", "Reactello.EntityFramework\Reactello.EntityFramework.csproj", "{B3B1B8E5-BBC1-472C-ACC0-E9A88A2F11D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactello.Data.EntityFramework", "Reactello.Data.EntityFramework\Reactello.Data.EntityFramework.csproj", "{1BBDB4EF-FFE2-4C4A-B718-B55FDAE51A10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reactello.Data.EntityFramework", "Reactello.Data.EntityFramework\Reactello.Data.EntityFramework.csproj", "{1BBDB4EF-FFE2-4C4A-B718-B55FDAE51A10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reactello.Identity", "Reactello.Identity\Reactello.Identity.csproj", "{D06D2046-4B64-48E4-BB16-6D497EC2D1BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOUSUNIECA", "DOUSUNIECA\DOUSUNIECA.csproj", "{F1690878-6157-41E1-88D7-DDE0B647D554}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,14 @@ Global
 		{1BBDB4EF-FFE2-4C4A-B718-B55FDAE51A10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BBDB4EF-FFE2-4C4A-B718-B55FDAE51A10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BBDB4EF-FFE2-4C4A-B718-B55FDAE51A10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D06D2046-4B64-48E4-BB16-6D497EC2D1BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D06D2046-4B64-48E4-BB16-6D497EC2D1BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D06D2046-4B64-48E4-BB16-6D497EC2D1BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D06D2046-4B64-48E4-BB16-6D497EC2D1BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1690878-6157-41E1-88D7-DDE0B647D554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1690878-6157-41E1-88D7-DDE0B647D554}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1690878-6157-41E1-88D7-DDE0B647D554}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1690878-6157-41E1-88D7-DDE0B647D554}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

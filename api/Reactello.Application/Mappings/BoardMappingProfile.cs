@@ -12,6 +12,7 @@ namespace Reactello.Application.Mappings
             CreateMap<Board, BoardListingDto>();
             CreateMap<CreateBoardDto, Board>();
             CreateMap<UpdateBoardDto, Board>();
+            CreateMap<Board, UpdateBoardDto>();
         }
     }
 }

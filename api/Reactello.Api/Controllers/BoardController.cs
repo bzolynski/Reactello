@@ -16,10 +16,16 @@ namespace Reactello.Api.Controllers
             return await Mediator.Send(new GetAllBoardsQuery());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("get/{id}")]
         public async Task<ActionResult<BoardDto>> Get(int id)
         {
             return await Mediator.Send(new GetBoardQuery(id));
+        }
+
+        [HttpGet("getupdate/{id}")]
+        public async Task<ActionResult<UpdateBoardDto>> GetForUpdate(int id)
+        {
+            return await Mediator.Send(new GetBoardForUpdateQuery(id));
         }
 
         [HttpPost]

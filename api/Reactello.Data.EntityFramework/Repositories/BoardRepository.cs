@@ -13,9 +13,19 @@ namespace Reactello.Data.EntityFramework.Repositories
 {
     public class BoardRepository : RepositoryBase<Board>, IBoardRepository
     {
+        private readonly IApplicationDbContext _dbContext;
+
         public BoardRepository(IApplicationDbContext dbContext) : base(dbContext)
         {
+            _dbContext = dbContext;
+        }
 
+        public async Task<Board> GetWithSectionsAndNotes(int id)
+        {
+            return await _dbContext.Set<Board>()
+                .Include(b => b.Sections)
+                .ThenInclude(s => s.Notes)
+                .FirstOrDefaultAsync(b => b.Id == id);
         }
     }
 }
