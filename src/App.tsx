@@ -1,22 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC } from 'react';
+import Layout from './components/Layout';
+import BoardListingPage from './pages/BoardListingPage';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import BoardPage from './pages/BoardPage';
 
-function App() {
+const App: FC = () => {
 	return (
-		<div className="App">
-			{console.log(React.version)}
-			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<p>
-					Edit <code>src/App.tsx</code> and save to reload.
-				</p>
-				<a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-					Learn React
-				</a>
-			</header>
-		</div>
+		<Router>
+			<Switch>
+				<Layout>
+					
+					<Route exact path={'/boards'}>
+						<BoardListingPage />
+					</Route>
+					<Route path={'/boards/:id'}>
+						<BoardPage />
+					</Route>
+				</Layout>
+			</Switch>
+		</Router>
 	);
-}
+};
 
 export default App;
