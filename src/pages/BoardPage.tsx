@@ -13,8 +13,11 @@ type Props = {};
 const BoardPage: FC<Props> = () => {
 	const [ hasError, setHasError ] = useState<boolean>(false);
 	const { board } = useSelector<Store, BoardState>((state) => ({ ...state.boardReducer }));
+	
 	const params = useParams<{ id: string }>();
+
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		try {
 			let id: number = Number.parseInt(params.id);

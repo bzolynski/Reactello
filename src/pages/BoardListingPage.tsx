@@ -14,7 +14,7 @@ import {
 import { FC, useEffect } from 'react';
 import BoardCard from '../components/BoardCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoards } from '../store/actions/boardActions';
+import { getBoardListings } from '../store/actions/boardActions';
 import { Store } from '../store/reducers/reducers';
 import { BoardState } from '../store/reducers/boardReducer';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -23,7 +23,7 @@ import RouterModal from '../components/RouterModal';
 import AddIcon from '@material-ui/icons/Add';
 import { openModal } from '../store/actions/modalActions';
 
-type GetBoards = ReturnType<typeof getBoards>;
+type GetBoardListings = ReturnType<typeof getBoardListings>;
 type OpenModal = ReturnType<typeof openModal>;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -37,16 +37,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const BoardListingPage: FC = () => {
-	const { boards } = useSelector<Store, BoardState>((state) => ({ ...state.boardReducer }));
+	const { boardListings: boards } = useSelector<Store, BoardState>((state) => ({ ...state.boardReducer }));
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch<GetBoards>(getBoards());
+		dispatch<GetBoardListings>(getBoardListings());
 	}, []);
 
 	const classes = useStyles();
 
 	const renderBoardCards = () => {
-		if (boards.length > 1) {
+		if (boards.length > 0) {
 			return boards.map((board) => (
 				<Grid key={board.id} xs={4} item>
 					<BoardCard board={board} />

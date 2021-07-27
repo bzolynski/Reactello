@@ -1,29 +1,25 @@
-import { Card, CardMedia, Paper } from '@material-ui/core';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { BoardPage as BoardModel } from '../models/board';
-import Section from '../components/Section';
-import { Box, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { Box } from '@material-ui/core';
+import { getSectionsForBoard } from '../store/actions/sectionActions';
+import { useDispatch } from 'react-redux';
+import SectionList from '../components/SectionList';
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: {}
-	})
-);
+type GetSectionsForBoard = ReturnType<typeof getSectionsForBoard>;
 
 type Props = {
 	board: BoardModel;
 };
 const Board: FC<Props> = ({ board }) => {
-	const classes = useStyles();
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch<GetSectionsForBoard>(getSectionsForBoard(board.id));
+	}, []);
+
 	return (
-		<Box className={classes.root} display="flex">
-			{board.sections.map((section) => {
-	return (
-					<Box key={section.id}>
-						<Section section={section} />
-					</Box>
-				);
-			})}
+		<Box display="flex">
+			<SectionList boardId={board.id} />
 		</Box>
 	);
 };

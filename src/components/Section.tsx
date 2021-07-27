@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddIcon from '@material-ui/icons/Add';
-import { FC, ReactElement } from 'react';
+import { FC } from 'react';
 import { Section as SectionModel } from '../models/section';
 
 const useStyles = makeStyles((theme: Theme) =>

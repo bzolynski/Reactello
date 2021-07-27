@@ -17,7 +17,6 @@ export interface BoardListing {
 
 export interface BoardPage {
 	id: number;
-	sections: Section[];
 	isPublic: boolean;
 	name: string;
 	background: string;

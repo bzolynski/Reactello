@@ -3,12 +3,12 @@ import { Dispatch } from 'redux';
 import dataService from '../../services/dataService';
 import * as actionTypes from '../actionTypes/boardActionTypes';
 
-export const getBoards = (): Promise<BoardListing[]> =>
+export const getBoardListings = () =>
 	((dispatch: Dispatch) => {
-		dataService.Boards.getAll().then((boards) => {
+		dataService.Boards.getAll().then((boardListings) => {
 			dispatch({
-				type: actionTypes.GET_BOARDS,
-				boards
+				type: actionTypes.GET_BOARD_LISTINGS,
+				boardListings
 			});
 		});
 	}) as any;

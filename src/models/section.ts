@@ -1,6 +1,6 @@
 import { Note } from './note';
 
-export interface CreateSection {
+export interface SectionCreate {
 	name: string;
 	color: string;
 	position: number;

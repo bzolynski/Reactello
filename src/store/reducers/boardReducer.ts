@@ -2,22 +2,23 @@ import { BoardPage, BoardListing } from '../../models/board';
 import * as actionTypes from '../actionTypes/boardActionTypes';
 
 export interface BoardState {
-	boards: BoardListing[];
+	boardListings: BoardListing[];
 	board: BoardPage | null;
 }
 
 const defaultState = (): BoardState => ({
-	boards: [],
+	boardListings: [],
 	board: null
 });
 
 export default (state = defaultState(), action: any) => {
 	switch (action.type) {
-		case actionTypes.GET_BOARDS: {
-			const data: actionTypes.BoardTypes['GET_BOARDS'] = action;
+		case actionTypes.GET_BOARD_LISTINGS: {
+			const data: actionTypes.BoardTypes['GET_BOARD_LISTINGS'] = action;
+			const boardListings = data.boardListings;
 			return {
 				...state,
-				boards: data.boards
+				boardListings: boardListings
 			};
 		}
 		case actionTypes.GET_BOARD: {

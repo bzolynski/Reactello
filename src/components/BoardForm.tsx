@@ -5,8 +5,12 @@ import { BoardForm as BoardFormModel } from '../models/board';
 import CheckboxInput from './form/CheckboxInput';
 import TextInput from './form/TextInput';
 import Form from './form/Form';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import dataService from '../services/dataService';
+import { closeModal } from '../store/actions/modalActions';
+import { useDispatch } from 'react-redux';
+
+type CloseModal = ReturnType<typeof closeModal>;
 
 const initialBoard: BoardFormModel = {
 	isPublic: false,
@@ -16,6 +20,8 @@ const initialBoard: BoardFormModel = {
 const BoardForm: FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const [ board, setBoard ] = useState<BoardFormModel>(initialBoard);
+	const dispatch = useDispatch();
+	const history = useHistory();
 
 	useEffect(
 		() => {
@@ -23,8 +29,13 @@ const BoardForm: FC = () => {
 		},
 		[ id ]
 	);
+	const handleSubmit = (values: BoardFormModel) => {
+		if (id) dataService.Boards.update(values).then(() => history.push(`/boards/${id}`));
+		else dataService.Boards.create(values).then((board) => history.push(`/boards/${board.id}`));
+		dispatch<CloseModal>(closeModal());
+	};
 	return (
-		<Formik enableReinitialize initialValues={board} onSubmit={(values) => console.log(values)}>
+		<Formik enableReinitialize initialValues={board} onSubmit={(values) => handleSubmit(values)}>
 			{({ handleSubmit }) => (
 				<Form onSubmit={handleSubmit}>
 					<TextInput label="Name" name="name" />
