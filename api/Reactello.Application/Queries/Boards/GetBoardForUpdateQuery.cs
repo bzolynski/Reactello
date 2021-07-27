@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Reactello.Application.Queries
+namespace Reactello.Application.Queries.Boards
 {
     public class GetBoardForUpdateQuery : IRequest<UpdateBoardDto>
     {

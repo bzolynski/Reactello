@@ -9,5 +9,6 @@ namespace Reactello.Data.Interfaces.Repositories
 {
     public interface ISectionRepository : IRepository<Section>
     {
+        Task<IEnumerable<Section>> GetSectionsForBoard(int boardId);
     }
 }

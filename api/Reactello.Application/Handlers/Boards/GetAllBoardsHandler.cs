@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Reactello.Application.Dtos.Boards;
-using Reactello.Application.Queries;
+using Reactello.Application.Queries.Boards;
 using Reactello.Data.Interfaces.Repositories;
 using System.Collections.Generic;
 using System.Threading;

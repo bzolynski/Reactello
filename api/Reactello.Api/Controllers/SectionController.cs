@@ -2,6 +2,7 @@
 using Reactello.Application.Commands.Sections;
 using Reactello.Application.Dtos.Sections;
 using Reactello.Application.Queries;
+using Reactello.Application.Queries.Sections;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,10 +11,16 @@ namespace Reactello.Api.Controllers
 {
     public class SectionController : BaseController
     {
-        [HttpGet]
+        [HttpGet("getAll")]
         public async Task<ActionResult<IEnumerable<SectionDto>>> GetAll()
         {
             return await Mediator.Send(new GetAllSectionsQuery());
+        }
+
+        [HttpGet("getForBoard/{boardId}")]
+        public async Task<ActionResult<IEnumerable<SectionDto>>> GetForBoard(int boardId)
+        {
+            return await Mediator.Send(new GetSectionsForBoardQuery(boardId));
         }
 
         [HttpPost]

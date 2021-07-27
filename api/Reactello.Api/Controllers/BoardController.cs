@@ -2,6 +2,7 @@
 using Reactello.Application.Commands.Boards;
 using Reactello.Application.Dtos.Boards;
 using Reactello.Application.Queries;
+using Reactello.Application.Queries.Boards;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,13 +17,13 @@ namespace Reactello.Api.Controllers
             return await Mediator.Send(new GetAllBoardsQuery());
         }
 
-        [HttpGet("get/{id}")]
+        [HttpGet("getAll/{id}")]
         public async Task<ActionResult<BoardDto>> Get(int id)
         {
             return await Mediator.Send(new GetBoardQuery(id));
         }
 
-        [HttpGet("getupdate/{id}")]
+        [HttpGet("getForUpdate/{id}")]
         public async Task<ActionResult<UpdateBoardDto>> GetForUpdate(int id)
         {
             return await Mediator.Send(new GetBoardForUpdateQuery(id));
