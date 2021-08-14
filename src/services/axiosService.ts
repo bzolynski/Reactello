@@ -1,5 +1,5 @@
 import axios from 'axios';
-import RestService from '../interfaces/RestService';
+import RestService from '../interfaces/restService.interface';
 
 axios.defaults.baseURL = 'https://localhost:44330/api/';
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';

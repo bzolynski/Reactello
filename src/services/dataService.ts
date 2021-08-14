@@ -1,4 +1,5 @@
 import { BoardPage, BoardListing, BoardForm } from '../models/board';
+import { NoteCreate, NoteListing } from '../models/note';
 import { Section, SectionCreate } from '../models/section';
 import { restService } from './serviceFactory';
 
@@ -29,11 +30,21 @@ const Boards = {
 		return await restService.delete<boolean>(Uri.Board + id);
 	}
 };
-const Notes = {};
+const Notes = {
+	create: async (note: NoteCreate): Promise<NoteListing> => {
+		return await restService.post<NoteListing>(Uri.Note, note);
+	},
+	delete: async (id: number): Promise<boolean> => {
+		return await restService.delete<boolean>(Uri.Note + id);
+	}
+};
 const Comments = {};
 const Sections = {
 	create: async (section: SectionCreate): Promise<Section> => {
 		return await restService.post<Section>(Uri.Section, section);
+	},
+	delete: async (id: number): Promise<boolean> => {
+		return await restService.delete<boolean>(Uri.Section + id);
 	},
 	getForBoard: async (boardId: number): Promise<Section[]> => {
 		return await restService.get<Section[]>(Uri.Section + 'getForBoard/' + boardId);

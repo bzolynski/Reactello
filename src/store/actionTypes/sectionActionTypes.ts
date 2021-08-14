@@ -1,13 +1,22 @@
 import { Section } from '../../models/section';
 
 export const CREATE_SECTION = 'CREATE_SECTION';
-export const GET_SECTIONS_FOR_BOARD = 'GET_SECTIONS_FOR_BOARD';
+export const DELETE_SECTION = 'DELETE_SECTION';
+export const FETCH_SECTIONS_BY_BOARD = 'FETCH_SECTIONS_BY_BOARD';
+export const ADD_NOTE_TO_SECTION = 'ADD_NOTE_TO_SECTION';
 
 export interface SectionTypes {
 	CREATE_SECTION: {
 		section: Section;
 	};
-	GET_SECTIONS_FOR_BOARD: {
+	FETCH_SECTIONS_BY_BOARD: {
 		sections: Section[];
+	};
+	DELETE_SECTION: {
+		sectionId: number;
+	};
+	ADD_NOTE_TO_SECTION: {
+		sectionId: number;
+		noteId: number;
 	};
 }

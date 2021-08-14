@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import Layout from './components/Layout';
-import BoardListingPage from './pages/BoardListingPage';
+import BoardListingPage from './pages/board-listing';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import BoardPage from './pages/BoardPage';
+import BoardPage from './pages/board';
 
 const App: FC = () => {
 	return (

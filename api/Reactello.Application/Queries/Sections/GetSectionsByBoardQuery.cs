@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Reactello.Application.Queries.Sections
 {
-    public class GetSectionsForBoardQuery : IRequest<List<SectionDto>>
+    public class GetSectionsByBoardQuery : IRequest<List<SectionDto>>
     {
-        public GetSectionsForBoardQuery(int boardId)
+        public GetSectionsByBoardQuery(int boardId)
         {
             BoardId = boardId;
         }

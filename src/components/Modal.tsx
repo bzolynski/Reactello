@@ -1,5 +1,6 @@
-import { Box, createStyles, makeStyles, Modal, Paper, Theme } from '@material-ui/core';
-import React, { FC, useState } from 'react';
+import * as Mui from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Store } from '../store/reducers/reducers';
 import { closeModal } from '../store/actions/modalActions';
@@ -28,14 +29,14 @@ const RouterModal: FC<Props> = ({ children }) => {
 	};
 
 	return (
-		<Modal
+		<Mui.Modal
 			open={isOpen}
 			onClose={handleClose}
 			aria-labelledby="simple-modal-title"
 			aria-describedby="simple-modal-description"
 		>
-			<Box className={classes.root}>{isOpen ? children : null}</Box>
-		</Modal>
+			<Mui.Box className={classes.root}>{isOpen ? children : null}</Mui.Box>
+		</Mui.Modal>
 	);
 };
 

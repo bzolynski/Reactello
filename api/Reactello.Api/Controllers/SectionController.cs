@@ -18,9 +18,9 @@ namespace Reactello.Api.Controllers
         }
 
         [HttpGet("getForBoard/{boardId}")]
-        public async Task<ActionResult<IEnumerable<SectionDto>>> GetForBoard(int boardId)
+        public async Task<ActionResult<IEnumerable<SectionDto>>> GetManyByBoard(int boardId)
         {
-            return await Mediator.Send(new GetSectionsForBoardQuery(boardId));
+            return await Mediator.Send(new GetSectionsByBoardQuery(boardId));
         }
 
         [HttpPost]

@@ -59,7 +59,7 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
                     b.Property<DateTime>("EditTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("NoteId")
+                    b.Property<int>("NoteId")
                         .HasColumnType("int");
 
                     b.Property<int>("UpVotes")
@@ -85,7 +85,7 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
                     b.Property<int>("Position")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SectionId")
+                    b.Property<int>("SectionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -105,7 +105,7 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BoardId")
+                    b.Property<int>("BoardId")
                         .HasColumnType("int");
 
                     b.Property<string>("Color")
@@ -128,7 +128,9 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
                 {
                     b.HasOne("Reactello.Domain.Entities.Note", "Note")
                         .WithMany("Comments")
-                        .HasForeignKey("NoteId");
+                        .HasForeignKey("NoteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Note");
                 });
@@ -137,7 +139,9 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
                 {
                     b.HasOne("Reactello.Domain.Entities.Section", "Section")
                         .WithMany("Notes")
-                        .HasForeignKey("SectionId");
+                        .HasForeignKey("SectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Section");
                 });
@@ -146,7 +150,9 @@ namespace Reactello.EntityFramework.SqlServer.Migrations
                 {
                     b.HasOne("Reactello.Domain.Entities.Board", "Board")
                         .WithMany("Sections")
-                        .HasForeignKey("BoardId");
+                        .HasForeignKey("BoardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Board");
                 });

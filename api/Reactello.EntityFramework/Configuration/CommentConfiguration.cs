@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace Reactello.EntityFramework.Configuration
 {
-    public class SectionConfiguration : IEntityTypeConfiguration<Section>
+    public class CommentConfiguration : IEntityTypeConfiguration<Comment>
     {
-        public void Configure(EntityTypeBuilder<Section> builder)
+        public void Configure(EntityTypeBuilder<Comment> builder)
         {
-            builder.HasOne(s => s.Board)
-                .WithMany(b => b.Sections)
+            builder.HasOne(c => c.Note)
+                .WithMany(n => n.Comments)
+                .HasForeignKey(c => c.NoteId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

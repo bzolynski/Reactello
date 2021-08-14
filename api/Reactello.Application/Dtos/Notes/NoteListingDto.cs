@@ -5,5 +5,7 @@
         public int Id { get; set; }
         public string Title { get; set; }
         public int Position { get; set; }
+
+        public int SectionId { get; set; }
     }
 }

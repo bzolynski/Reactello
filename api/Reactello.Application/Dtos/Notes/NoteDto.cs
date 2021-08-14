@@ -10,5 +10,7 @@ namespace Reactello.Application.Dtos.Notes
         public string Description { get; set; }
         public int Position { get; set; }
         public List<CommentDto> Comments { get; set; }
+
+        public int SectionId { get; set; }
     }
 }

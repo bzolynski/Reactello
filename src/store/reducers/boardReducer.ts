@@ -3,12 +3,12 @@ import * as actionTypes from '../actionTypes/boardActionTypes';
 
 export interface BoardState {
 	boardListings: BoardListing[];
-	board: BoardPage | null;
+	currentBoard: BoardPage | null;
 }
 
 const defaultState = (): BoardState => ({
 	boardListings: [],
-	board: null
+	currentBoard: null
 });
 
 export default (state = defaultState(), action: any) => {
@@ -25,7 +25,15 @@ export default (state = defaultState(), action: any) => {
 			const data: actionTypes.BoardTypes['GET_BOARD'] = action;
 			return {
 				...state,
-				board: data.board
+				currentBoard: data.currentBoard
+			};
+		}
+		case actionTypes.CREATE_BOARD: {
+			const data: actionTypes.BoardTypes['CREATE_BOARD'] = action;
+			const boardListings = [ ...state.boardListings, data.boardListing ];
+			return {
+				...state,
+				boardListings: boardListings
 			};
 		}
 		default:

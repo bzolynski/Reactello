@@ -10,4 +10,5 @@ export interface Comment {
 	downVotes: number;
 	createTime: Date;
 	editTime: Date;
+	noteId: number;
 }

@@ -19,9 +19,11 @@ namespace Reactello.Data.EntityFramework.Repositories
             _sections = dbContext.Set<Section>();
         }
 
-        public async Task<IEnumerable<Section>> GetSectionsForBoard(int boardId)
+        public async Task<IEnumerable<Section>> GetSectionsByBoard(int boardId)
         {
-            return await _sections.Where(x => x.BoardId == boardId).ToListAsync();
+            return await _sections.Where(x => x.BoardId == boardId)
+                .Include(x => x.Notes)
+                .ToListAsync();
         }
     }
 }

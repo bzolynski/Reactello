@@ -11,9 +11,9 @@ type Props = {
 	disablekeyboard: boolean;
 };
 
-const TextInput: FC<Props> = (props: Props) => {
+const NumberInput: FC<Props> = (props: Props) => {
 	const [ field, meta ] = useField(props.name);
-
+	const { disablekeyboard, ...properties } = props;
 	return (
 		<TextField
 			InputProps={{
@@ -24,7 +24,7 @@ const TextInput: FC<Props> = (props: Props) => {
 			}}
 			error={meta.touched && !!meta.error}
 			{...field}
-			{...props}
+			{...properties}
 			helperText={meta.error}
 			type="number"
 			onKeyDown={(event) => {
@@ -34,4 +34,4 @@ const TextInput: FC<Props> = (props: Props) => {
 	);
 };
 
-export default TextInput;
+export default NumberInput;

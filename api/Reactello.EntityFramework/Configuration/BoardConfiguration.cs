@@ -13,9 +13,7 @@ namespace Reactello.EntityFramework.Configuration
     {
         public void Configure(EntityTypeBuilder<Board> builder)
         {
-            builder.HasMany(b => b.Sections)
-                .WithOne(s => s.Board)
-                .OnDelete(DeleteBehavior.Cascade);
+            
         }
     }
 }

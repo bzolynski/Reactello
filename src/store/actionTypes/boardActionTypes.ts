@@ -9,6 +9,9 @@ export interface BoardTypes {
 		boardListings: BoardListing[];
 	};
 	GET_BOARD: {
-		board: BoardPage;
+		currentBoard: BoardPage;
 	};
+	CREATE_BOARD:{
+		boardListing : BoardListing
+	}
 }

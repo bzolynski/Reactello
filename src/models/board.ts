@@ -1,5 +1,3 @@
-import { Section } from './section';
-
 export interface BoardForm {
 	id?: number;
 	isPublic: boolean;

@@ -13,10 +13,10 @@ namespace Reactello.EntityFramework.Configuration
     {
         public void Configure(EntityTypeBuilder<Note> builder)
         {
-            builder.HasMany(n => n.Comments)
-                .WithOne(c => c.Note)
-                .HasForeignKey(c => c.NoteId)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(n => n.Section)
+               .WithMany(s => s.Notes)
+               .HasForeignKey(n => n.SectionId)
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

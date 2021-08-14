@@ -15,7 +15,7 @@ namespace Reactello.Application.Handlers.Sections
             _sectionRepository = sectionRepository;
         }
         public async Task<bool> Handle(DeleteSectionCommand request, CancellationToken cancellationToken)
-        {
+        {            
             return await _sectionRepository.Delete(request.Id);
         }
     }
