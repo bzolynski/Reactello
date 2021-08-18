@@ -6,7 +6,6 @@ import NumberInput from '../../../components/form/NumberInput';
 import { SectionCreate } from '../../../models/section';
 import { useDispatch, useSelector } from 'react-redux';
 import { Store } from '../../../store/reducers/reducers';
-import { BoardPage } from '../../../models/board';
 import { createSection } from '../../../store/actions/sectionActions';
 import Form from '../../../components/form/Form';
 
@@ -17,7 +16,7 @@ type Props = {
 };
 
 const SectionForm: FC<Props> = ({ callback }) => {
-	const { id: boardId } = useSelector<Store, BoardPage>((state) => ({ ...state.boardReducer.currentBoard! }));
+	const boardId = useSelector<Store, number>((state) => state.boardReducer.currentBoard!);
 	const numberOfSections = useSelector<Store, number>((state) => state.sectionReducer.itemIds.length);
 	const dispatch = useDispatch();
 

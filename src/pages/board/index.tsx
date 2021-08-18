@@ -2,28 +2,34 @@ import { Box, CircularProgress } from '@material-ui/core';
 import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getBoard } from '../../store/actions/boardActions';
+import { NormalizedBoard } from '../../models/normalizedModels';
 import { BoardState } from '../../store/reducers/boardReducer';
 import { Store } from '../../store/reducers/reducers';
-import Board from './components/Board';
-
-type GetBoard = ReturnType<typeof getBoard>;
+import SectionList from './components/SectionList';
 
 type Props = {};
 const BoardPage: FC<Props> = () => {
-	const { currentBoard } = useSelector<Store, BoardState>((state) => ({ ...state.boardReducer }));
+	//dispatch<SetCurrentBoard>(setCurrentBoard(boardId));
+
+	const board = useSelector<Store, NormalizedBoard>(
+		(state) => state.boardReducer.items[state.boardReducer.currentBoard!]
+	);
 	const params = useParams<{ id: string }>();
 	const dispatch = useDispatch();
 	const id = Number.parseInt(params.id);
 	useEffect(() => {
-		dispatch<GetBoard>(getBoard(id));
+		//dispatch<SetCurrentBoard>(setCurrentBoard(boardId));
 	}, []);
 
 	const renderBoard = () => {
-		if (currentBoard == null) {
+		if (board == null || board.id !== id) {
 			return <CircularProgress />;
 		} else {
-			return <Board />;
+			return (
+				<Box display="flex">
+					<SectionList />
+				</Box>
+			);
 		}
 	};
 

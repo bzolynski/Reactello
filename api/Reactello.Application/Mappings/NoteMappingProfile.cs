@@ -9,7 +9,6 @@ namespace Reactello.Application.Mappings
         public NoteMappingProfile()
         {
             CreateMap<Note, NoteDto>();
-            CreateMap<Note, NoteListingDto>();
             CreateMap<CreateNoteDto, Note>();
             CreateMap<UpdateNoteDto, Note>();
         }

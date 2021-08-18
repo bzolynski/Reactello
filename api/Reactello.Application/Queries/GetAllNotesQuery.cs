@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Reactello.Application.Queries
 {
-    public class GetAllNotesQuery : IRequest<List<NoteListingDto>>
+    public class GetAllNotesQuery : IRequest<List<NoteDto>>
     {
     }
 }

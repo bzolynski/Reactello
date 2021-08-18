@@ -1,15 +1,17 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Reactello.Application.Dtos.Notes;
 using Reactello.Application.Queries;
 using Reactello.Data.Interfaces.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Reactello.Application.Handlers.Notes
 {
-    public class GetAllNotesHandler : IRequestHandler<GetAllNotesQuery, List<NoteListingDto>>
+    public class GetAllNotesHandler : IRequestHandler<GetAllNotesQuery, List<NoteDto>>
     {
         private readonly INoteRepository _noteRepository;
         private readonly IMapper _mapper;
@@ -19,10 +21,10 @@ namespace Reactello.Application.Handlers.Notes
             _noteRepository = noteRepository;
             _mapper = mapper;
         }
-        public async Task<List<NoteListingDto>> Handle(GetAllNotesQuery request, CancellationToken cancellationToken)
+        public Task<List<NoteDto>> Handle(GetAllNotesQuery request, CancellationToken cancellationToken)
         {
-            var notes = await _noteRepository.GetAll();
-            return _mapper.Map<List<NoteListingDto>>(notes);
+            var notes = _noteRepository.GetAll().ProjectTo<NoteDto>(_mapper.ConfigurationProvider);
+            return Task.FromResult(notes.ToList());
         }
     }
 }

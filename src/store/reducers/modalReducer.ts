@@ -8,7 +8,7 @@ const defaultState = (): ModalState => ({
 	isOpen: false
 });
 
-export default (state = defaultState(), action: any) => {
+export default (state = defaultState(), action: any): ModalState => {
 	switch (action.type) {
 		case actionTypes.OPEN_MODAL: {
 			return {

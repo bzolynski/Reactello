@@ -7,21 +7,19 @@ import AddSectionButton from './AddSectionButton';
 import Section from './Section';
 
 const SectionList: FC = () => {
-	const { itemIds } = useSelector<Store, SectionState>((state) => ({ ...state.sectionReducer }));
+	const sectionIds = useSelector<Store, number[]>(
+		(state) => state.boardReducer.items[state.boardReducer.currentBoard!].sections
+	);
 
 	const renderSections = () => {
-		if (itemIds.length > 0) {
-			return itemIds.map((id) => {
-				return <Section key={id} sectionId={id} />;
-			});
-		} else {
-			return <Mui.CircularProgress />;
-		}
+		return sectionIds.map((id) => {
+			return <Section key={id} sectionId={id} />;
+		});
 	};
 	return (
 		<Mui.Box display="flex">
 			{renderSections()}
-			<AddSectionButton />			
+			<AddSectionButton />
 		</Mui.Box>
 	);
 };

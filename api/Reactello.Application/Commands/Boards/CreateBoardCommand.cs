@@ -3,7 +3,7 @@ using Reactello.Application.Dtos.Boards;
 
 namespace Reactello.Application.Commands.Boards
 {
-    public class CreateBoardCommand : IRequest<BoardListingDto>
+    public class CreateBoardCommand : IRequest<BoardDto>
     {
         public CreateBoardCommand(CreateBoardDto board)
         {

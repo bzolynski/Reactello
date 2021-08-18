@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Reactello.Application.Handlers.Boards
 {
-    public class CreateBoardHandler : IRequestHandler<CreateBoardCommand, BoardListingDto>
+    public class CreateBoardHandler : IRequestHandler<CreateBoardCommand, BoardDto>
     {
         private readonly IBoardRepository _boardRepository;
         private readonly IMapper _mapper;
@@ -19,11 +19,11 @@ namespace Reactello.Application.Handlers.Boards
             _boardRepository = boardRepository;
             _mapper = mapper;
         }
-        public async Task<BoardListingDto> Handle(CreateBoardCommand request, CancellationToken cancellationToken)
+        public async Task<BoardDto> Handle(CreateBoardCommand request, CancellationToken cancellationToken)
         {
             var board = _mapper.Map<Board>(request.Board);
             var result = await _boardRepository.Create(board);
-            return _mapper.Map<BoardListingDto>(result);
+            return _mapper.Map<BoardDto>(result);
         }
     }
 }

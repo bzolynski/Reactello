@@ -1,15 +1,17 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Reactello.Application.Dtos.Boards;
 using Reactello.Application.Queries.Boards;
 using Reactello.Data.Interfaces.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Reactello.Application.Handlers.Boards
 {
-    public class GetAllBoardsHandler : IRequestHandler<GetAllBoardsQuery, List<BoardListingDto>>
+    public class GetAllBoardsHandler : IRequestHandler<GetAllBoardsQuery, List<BoardDto>>
     {
         private readonly IBoardRepository _boardRepository;
         private readonly IMapper _mapper;
@@ -19,10 +21,10 @@ namespace Reactello.Application.Handlers.Boards
             _boardRepository = boardRepository;
             _mapper = mapper;
         }
-        public async Task<List<BoardListingDto>> Handle(GetAllBoardsQuery request, CancellationToken cancellationToken)
+        public Task<List<BoardDto>> Handle(GetAllBoardsQuery request, CancellationToken cancellationToken)
         {
-            var boards = await _boardRepository.GetAll();
-            return _mapper.Map<List<BoardListingDto>>(boards);
+            var boards = _boardRepository.GetAll().ProjectTo<BoardDto>(_mapper.ConfigurationProvider);
+            return Task.FromResult(boards.ToList());
         }
     }
 }

@@ -9,8 +9,28 @@ import { Formik } from 'formik';
 import { NoteCreate } from '../../../models/note';
 import { createNote } from '../../../store/actions/noteActions';
 import { useDispatch } from 'react-redux';
+import { createStyles, makeStyles } from '@material-ui/core';
 
 type CreateNote = ReturnType<typeof createNote>;
+
+const useStyles = makeStyles((theme: Mui.Theme) =>
+	createStyles({
+		formContent: {
+			display: 'flex',
+			flexDirection: 'column',
+			padding: theme.spacing(1),
+			paddingLeft: theme.spacing(2),
+			paddingRight: theme.spacing(2)
+		},
+		formButtons: {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center',
+			paddingTop: theme.spacing(1)
+		}
+	})
+);
 
 type Props = {
 	sectionId: number;
@@ -19,6 +39,7 @@ type Props = {
 const AddNoteButton: FC<Props> = ({ sectionId }) => {
 	const [ formOpen, setFormOpen ] = useState<boolean>(false);
 	const dispatch = useDispatch();
+	const classes = useStyles();
 
 	const initialNote: NoteCreate = {
 		title: '',
@@ -27,9 +48,8 @@ const AddNoteButton: FC<Props> = ({ sectionId }) => {
 	};
 
 	const handleSubmit = (values: NoteCreate) => {
-		console.log(values);
 		if (values.title !== '') {
-			dispatch<CreateNote>(createNote(values, sectionId));
+			dispatch<CreateNote>(createNote(values));
 		}
 		setFormOpen(false);
 	};
@@ -39,15 +59,17 @@ const AddNoteButton: FC<Props> = ({ sectionId }) => {
 				<NoteListingWrapper>
 					<Formik initialValues={initialNote} onSubmit={(values) => handleSubmit(values)}>
 						<Form>
-							<TextInput label="Title" name="title" />
-							<TextInput label="Description" name="description" />
-							<Mui.Box>
-								<Mui.Button type="submit" variant="outlined">
-									Create
-								</Mui.Button>
-								<Mui.IconButton aria-label="delete" type="reset" onClick={() => setFormOpen(false)}>
-									<ClearIcon />
-								</Mui.IconButton>
+							<Mui.Box className={classes.formContent}>
+								<TextInput label="Title" name="title" />
+								<TextInput label="Description" name="description" />
+								<Mui.Box className={classes.formButtons}>
+									<Mui.Button type="submit" variant="outlined">
+										Create
+									</Mui.Button>
+									<Mui.IconButton aria-label="delete" type="reset" onClick={() => setFormOpen(false)}>
+										<ClearIcon />
+									</Mui.IconButton>
+								</Mui.Box>
 							</Mui.Box>
 						</Form>
 					</Formik>

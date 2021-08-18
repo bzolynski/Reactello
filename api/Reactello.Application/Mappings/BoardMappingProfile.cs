@@ -9,7 +9,6 @@ namespace Reactello.Application.Mappings
         public BoardMappingProfile()
         {
             CreateMap<Board, BoardDto>();
-            CreateMap<Board, BoardListingDto>();
             CreateMap<CreateBoardDto, Board>();
             CreateMap<UpdateBoardDto, Board>();
             CreateMap<Board, UpdateBoardDto>();

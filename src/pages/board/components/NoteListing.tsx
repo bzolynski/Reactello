@@ -38,8 +38,7 @@ const NoteListing: FC<Props> = ({ noteId }) => {
 		setAnchorEl(null);
 	};
 	const handleDeleteNote = () => {
-		console.log('delete note: ' + noteId);
-		dispatch<DeleteNote>(deleteNote(noteId));
+		dispatch<DeleteNote>(deleteNote(noteId, note.sectionId));
 		handleClosePopover();
 	};
 

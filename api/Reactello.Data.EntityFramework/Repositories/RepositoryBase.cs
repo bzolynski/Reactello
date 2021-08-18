@@ -40,9 +40,9 @@ namespace Reactello.Data.EntityFramework.Repositories
             return await _dbContext.Set<T>().FindAsync(id);
         }
         
-        public async Task<IEnumerable<T>> GetAll()
+        public IQueryable<T> GetAll()
         {
-           return await _dbContext.Set<T>().ToListAsync();
+           return _dbContext.Set<T>();
         }
 
         public async Task<T> Update(int id, T entity)

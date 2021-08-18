@@ -11,7 +11,7 @@ namespace Reactello.Api.Controllers
     public class NoteController : BaseController
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<NoteListingDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<NoteDto>>> GetAll()
         {
             return await Mediator.Send(new GetAllNotesQuery());
         }
@@ -23,7 +23,7 @@ namespace Reactello.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<NoteListingDto>> Create([FromBody] CreateNoteDto createNote)
+        public async Task<ActionResult<NoteDto>> Create([FromBody] CreateNoteDto createNote)
         {
             return await Mediator.Send(new CreateNoteCommand(createNote));
         }

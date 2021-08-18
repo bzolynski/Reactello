@@ -9,6 +9,8 @@ namespace Reactello.Application.Dtos.Sections
         public string Name { get; set; }
         public string Color { get; set; }
         public int Position { get; set; }
-        public List<NoteListingDto> Notes { get; set; }
+        public List<NoteDto> Notes { get; set; }
+     
+        public int BoardId { get; set; }
     }
 }

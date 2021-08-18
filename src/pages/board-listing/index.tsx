@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { FC, useEffect } from 'react';
 import BoardCard from './components/BoardCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoardListings } from '../../store/actions/boardActions';
+import { getAllBoards } from '../../store/actions/boardActions';
 import { Store } from '../../store/reducers/reducers';
 import { BoardState } from '../../store/reducers/boardReducer';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -12,7 +12,7 @@ import Modal from '../../components/Modal';
 import AddIcon from '@material-ui/icons/Add';
 import { openModal } from '../../store/actions/modalActions';
 
-type GetBoardListings = ReturnType<typeof getBoardListings>;
+type GetBoardListings = ReturnType<typeof getAllBoards>;
 type OpenModal = ReturnType<typeof openModal>;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -26,19 +26,19 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const BoardListingPage: FC = () => {
-	const { boardListings: boards } = useSelector<Store, BoardState>((state) => ({ ...state.boardReducer }));
+	const { itemIds: boardIds } = useSelector<Store, BoardState>((state) => ({ ...state.boardReducer }));
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch<GetBoardListings>(getBoardListings());
+		dispatch<GetBoardListings>(getAllBoards());
 	}, []);
 
 	const classes = useStyles();
 
 	const renderBoardCards = () => {
-		if (boards.length > 0) {
-			return boards.map((board) => (
-				<Mui.Grid key={board.id} xs={4} item>
-					<BoardCard board={board} />
+		if (boardIds.length > 0) {
+			return boardIds.map((id) => (
+				<Mui.Grid key={id} xs={4} item>
+					<BoardCard boardId={id} />
 				</Mui.Grid>
 			));
 		} else {

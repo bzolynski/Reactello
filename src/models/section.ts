@@ -1,5 +1,5 @@
 import { NormalizedModel, NormalizedSection } from './normalizedModels';
-import { NoteListing } from './note';
+import { Note } from './note';
 
 export interface SectionCreate {
 	name: string;
@@ -12,7 +12,7 @@ export interface Section {
 	name: string;
 	color: string;
 	position: number;
-	notes: NoteListing[];
+	notes: Note[];
 	boardId: number;
 }
 

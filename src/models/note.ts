@@ -11,23 +11,19 @@ export interface Note {
 	title: string;
 	description: string;
 	position: number;
+	sectionId: number;
 	comments: Comment[];
 }
 
-export interface NoteListing {
-	id: number;
-	title: string;
-	position: number;
-	sectionId: number;
-}
-
-export const normalize = (note: NoteListing): NormalizedModel<NormalizedNote> => {
+export const normalize = (note: Note): NormalizedModel<NormalizedNote> => {
 	return {
 		[note.id]: {
 			id: note.id,
 			title: note.title,
 			position: note.position,
-			sectionId: note.sectionId
+			description: note.description,
+			sectionId: note.sectionId,
+			comments: note.comments.map((x) => x.id)
 		}
 	};
 };

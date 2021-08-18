@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Reactello.Application.Dtos.Comments;
 using Reactello.Application.Queries;
 using Reactello.Data.Interfaces.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,10 +21,10 @@ namespace Reactello.Application.Handlers.Comments
             _commentRepository = commentRepository;
             _mapper = mapper;
         }
-        public async Task<List<CommentDto>> Handle(GetAllCommentsQuery request, CancellationToken cancellationToken)
+        public Task<List<CommentDto>> Handle(GetAllCommentsQuery request, CancellationToken cancellationToken)
         {
-            var comments = await _commentRepository.GetAll();
-            return _mapper.Map<List<CommentDto>>(comments);
+            var comments = _commentRepository.GetAll().ProjectTo<CommentDto>(_mapper.ConfigurationProvider);
+            return Task.FromResult(comments.ToList());
         }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Reactello.Application.Dtos.Sections;
 using Reactello.Application.Queries.Sections;
 using Reactello.Data.Interfaces.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,10 +21,10 @@ namespace Reactello.Application.Handlers.Sections
             _sectionRepository = sectionRepository;
             _mapper = mapper;
         }
-        public async Task<List<SectionDto>> Handle(GetAllSectionsQuery request, CancellationToken cancellationToken)
+        public Task<List<SectionDto>> Handle(GetAllSectionsQuery request, CancellationToken cancellationToken)
         {
-            var sections = await _sectionRepository.GetAll();
-            return _mapper.Map<List<SectionDto>>(sections);
+            var sections = _sectionRepository.GetAll().ProjectTo<SectionDto>(_mapper.ConfigurationProvider);
+            return Task.FromResult(sections.ToList());
         }
     }
 }

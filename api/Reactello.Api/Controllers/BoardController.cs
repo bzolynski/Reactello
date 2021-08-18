@@ -12,7 +12,7 @@ namespace Reactello.Api.Controllers
     public class BoardController : BaseController
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BoardListingDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<BoardDto>>> GetAll()
         {
             return await Mediator.Send(new GetAllBoardsQuery());
         }
@@ -20,6 +20,7 @@ namespace Reactello.Api.Controllers
         [HttpGet("getAll/{id}")]
         public async Task<ActionResult<BoardDto>> Get(int id)
         {
+            var cos = await Mediator.Send(new GetBoardQuery(id));
             return await Mediator.Send(new GetBoardQuery(id));
         }
 
@@ -30,7 +31,7 @@ namespace Reactello.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<BoardListingDto>> Create([FromBody] CreateBoardDto createBoard)
+        public async Task<ActionResult<BoardDto>> Create([FromBody] CreateBoardDto createBoard)
         {
             return await Mediator.Send(new CreateBoardCommand(createBoard));
         }

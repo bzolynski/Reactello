@@ -5,12 +5,13 @@ import StarIcon from '@material-ui/icons/Star';
 import ShareIcon from '@material-ui/icons/ShareOutlined';
 import React, { FC } from 'react';
 import tempBG from '../../../assets/tempBG.jpg';
-import { BoardListing } from '../../../models/board';
 import { useHistory } from 'react-router';
-import { getBoard } from '../../../store/actions/boardActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Store } from '../../../store/reducers/reducers';
+import { NormalizedBoard } from '../../../models/normalizedModels';
+import { setCurrentBoard } from '../../../store/actions/boardActions';
 
-type GetBoard = ReturnType<typeof getBoard>;
+type SetCurrentBoard = ReturnType<typeof setCurrentBoard>;
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -35,15 +36,16 @@ const buttonInCardActionArea = {
 };
 
 type Props = {
-	board: BoardListing;
+	boardId: number;
 };
-const BoardCard: FC<Props> = ({ board }) => {
+const BoardCard: FC<Props> = ({ boardId }) => {
+	const board = useSelector<Store, NormalizedBoard>((state) => state.boardReducer.items[boardId]);
 	const classes = useStyles();
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const redirectToBoard = () => {
-		dispatch<GetBoard>(getBoard(board.id));
-		history.push(`/boards/${board.id}/${board.name}`);
+		dispatch<SetCurrentBoard>(setCurrentBoard(boardId));
+		history.push(`/boards/${boardId}/${board.name}`);
 	};
 	return (
 		<Mui.Box>

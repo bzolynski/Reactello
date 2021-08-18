@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Reactello.Application.Handlers.Notes
 {
-    public class CreateNoteHandler : IRequestHandler<CreateNoteCommand, NoteListingDto>
+    public class CreateNoteHandler : IRequestHandler<CreateNoteCommand, NoteDto>
     {
         private readonly INoteRepository _noteRepository;
         private readonly IMapper _mapper;
@@ -19,11 +19,11 @@ namespace Reactello.Application.Handlers.Notes
             _noteRepository = noteRepository;
             _mapper = mapper;
         }
-        public async Task<NoteListingDto> Handle(CreateNoteCommand request, CancellationToken cancellationToken)
+        public async Task<NoteDto> Handle(CreateNoteCommand request, CancellationToken cancellationToken)
         {
             var note = _mapper.Map<Note>(request.Note);
             var result = await _noteRepository.Create(note);
-            return _mapper.Map<NoteListingDto>(result);
+            return _mapper.Map<NoteDto>(result);
         }
     }
 }

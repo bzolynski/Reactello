@@ -9,8 +9,24 @@ const defaultState = (): SectionState => ({
 	itemIds: []
 });
 
-export default (state = defaultState(), action: any) => {
+export default (state = defaultState(), action: any): SectionState => {
 	switch (action.type) {
+		case actionTypes.STORE_SECTIONS: {
+			const data: actionTypes.SectionTypes['STORE_SECTIONS'] = action;
+			const sectionIds = data.sections.map((x) => x.id);
+			let sections: { [id: number]: NormalizedSection } = {};
+			data.sections.forEach((x) => {
+				const normalized = normalize(x);
+				sections = { ...sections, ...normalized };
+			});
+			return {
+				...state,
+				items: {
+					...sections
+				},
+				itemIds: [ ...sectionIds ]
+			};
+		}
 		case actionTypes.CREATE_SECTION: {
 			const data: actionTypes.SectionTypes['CREATE_SECTION'] = action;
 			const id = data.section.id;
@@ -42,36 +58,32 @@ export default (state = defaultState(), action: any) => {
 		case actionTypes.ADD_NOTE_TO_SECTION: {
 			const data: actionTypes.SectionTypes['ADD_NOTE_TO_SECTION'] = action;
 			const section = { ...state.items[data.sectionId] };
-			const noteIds = [ ...section.notes, data.noteId ];
-			console.log(data.noteId);
-			console.log(noteIds);
+			const notes = [ ...section.notes, data.noteId ];
+
 			return {
 				...state,
 				items: {
 					...state.items,
 					[data.sectionId]: {
 						...state.items[data.sectionId],
-						notes: [ ...noteIds ]
+						notes: [ ...notes ]
 					}
 				}
 			};
 		}
-
-		case actionTypes.FETCH_SECTIONS_BY_BOARD: {
-			const data: actionTypes.SectionTypes['FETCH_SECTIONS_BY_BOARD'] = action;
-			const ids = data.sections.map((x) => x.id);
-			let sections: { [x: number]: NormalizedSection } = {};
-			data.sections.forEach((x) => {
-				const normalized = normalize(x);
-				sections = { ...sections, ...normalized };
-			});
-
+		case actionTypes.REMOVE_NOTE_FROM_SECTION: {
+			const data: actionTypes.SectionTypes['REMOVE_NOTE_FROM_SECTION'] = action;
+			const section = { ...state.items[data.sectionId] };
+			const indexToRemove = section.notes.indexOf(data.noteId);
+			section.notes.splice(indexToRemove, 1);
 			return {
 				...state,
 				items: {
-					...sections
-				},
-				itemIds: [ ...ids ]
+					...state.items,
+					[data.sectionId]: {
+						...section
+					}
+				}
 			};
 		}
 		default:

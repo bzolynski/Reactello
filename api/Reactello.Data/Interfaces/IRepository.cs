@@ -13,8 +13,8 @@ namespace Reactello.Data.Interfaces
 
         Task<T> Create(T entity);
         Task<T> Get(int id);
-        Task<IEnumerable<T>> GetAll();
         Task<T> Update(int id, T entity);
         Task<bool> Delete(int id);
+        IQueryable<T> GetAll();
     }
 }

@@ -31,7 +31,9 @@ type Props = {
 };
 const Section: FC<Props> = ({ sectionId }) => {
 	const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null);
-	const section = useSelector<Store, NormalizedSection>((state) => state.sectionReducer.items[sectionId]);
+	const section = useSelector<Store, NormalizedSection>((state) => {
+		return state.sectionReducer.items[sectionId];
+	});
 	const dispatch = useDispatch();
 	const classes = useStyles();
 
@@ -42,55 +44,61 @@ const Section: FC<Props> = ({ sectionId }) => {
 		setAnchorEl(null);
 	};
 	const handleDeleteSection = () => {
-		dispatch<DeleteSection>(deleteSection(sectionId));
+		dispatch<DeleteSection>(deleteSection(sectionId, section.boardId));
 		handleClosePopover();
 	};
-	return (
-		<Mui.Box>
-			<Mui.Paper className={classes.root} elevation={2}>
-				<Mui.List
-					subheader={
-						<Mui.ListSubheader component="div">
-							<Mui.Box
-								display="flex"
-								flexDirection="row"
-								alignItems="center"
-								justifyContent="space-between"
-							>
-								{section.name}
-								<Mui.IconButton size="small" onClick={handleOpenPopover}>
-									<MoreHorizIcon />
-								</Mui.IconButton>
-								<Mui.Popover
-									open={Boolean(anchorEl)}
-									anchorEl={anchorEl}
-									onClose={handleClosePopover}
-									anchorOrigin={{
-										vertical: 'center',
-										horizontal: 'right'
-									}}
-									transformOrigin={{
-										vertical: 'center',
-										horizontal: 'left'
-									}}
+	const renderSection = () => {
+		if (section == null) {
+			return <Mui.CircularProgress />;
+		} else {
+			return (
+				<Mui.Paper className={classes.root} elevation={2}>
+					<Mui.List
+						subheader={
+							<Mui.ListSubheader component="div">
+								<Mui.Box
+									display="flex"
+									flexDirection="row"
+									alignItems="center"
+									justifyContent="space-between"
 								>
-									<Mui.Box className={classes.popoverContent}>
-										<Mui.IconButton size="small" onClick={handleDeleteSection}>
-											<DeleteIcon color="secondary" fontSize="small" />
-										</Mui.IconButton>
-									</Mui.Box>
-								</Mui.Popover>
-							</Mui.Box>
-						</Mui.ListSubheader>
-					}
-				>
-					{section.notes.map((noteId) => <NoteListing key={noteId} noteId={noteId} />)}
-					{/* <NoteListingList sectionId={sectionId} /> */}
-					<AddNoteButton sectionId={sectionId} />
-				</Mui.List>
-			</Mui.Paper>
-		</Mui.Box>
-	);
+									{section.name}
+									<Mui.IconButton size="small" onClick={handleOpenPopover}>
+										<MoreHorizIcon />
+									</Mui.IconButton>
+									<Mui.Popover
+										open={Boolean(anchorEl)}
+										anchorEl={anchorEl}
+										onClose={handleClosePopover}
+										anchorOrigin={{
+											vertical: 'center',
+											horizontal: 'right'
+										}}
+										transformOrigin={{
+											vertical: 'center',
+											horizontal: 'left'
+										}}
+									>
+										<Mui.Box className={classes.popoverContent}>
+											<Mui.IconButton size="small" onClick={handleDeleteSection}>
+												<DeleteIcon color="secondary" fontSize="small" />
+											</Mui.IconButton>
+										</Mui.Box>
+									</Mui.Popover>
+								</Mui.Box>
+							</Mui.ListSubheader>
+						}
+					>
+						{section.notes.map((noteId) => <NoteListing key={noteId} noteId={noteId} />)}
+						{/* <NoteListingList sectionId={sectionId} /> */}
+						<AddNoteButton sectionId={sectionId} />
+					</Mui.List>
+				</Mui.Paper>
+			);
+		}
+	};
+
+	return <Mui.Box>{renderSection()}</Mui.Box>;
 };
 
 export default Section;

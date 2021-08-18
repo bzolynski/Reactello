@@ -7,6 +7,15 @@ export interface NormalizedModel<TModel> {
 	[id: number]: TModel;
 }
 
+export interface NormalizedBoard {
+	id: number;
+	isPublic: boolean;
+	name: string;
+	background: string;
+	dateCreated?: string;
+	sections: number[];
+}
+
 export interface NormalizedSection {
 	id: number;
 	name: string;
@@ -19,8 +28,10 @@ export interface NormalizedSection {
 export interface NormalizedNote {
 	id: number;
 	title: string;
+	description: string;
 	position: number;
 	sectionId: number;
+	comments: number[];
 }
 
 export interface NormalizedComment {

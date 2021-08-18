@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Reactello.Application.Queries.Boards
 {
-    public class GetAllBoardsQuery : IRequest<List<BoardListingDto>>
+    public class GetAllBoardsQuery : IRequest<List<BoardDto>>
     {
     }
 }
