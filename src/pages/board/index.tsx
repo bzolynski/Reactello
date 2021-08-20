@@ -3,7 +3,6 @@ import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { NormalizedBoard } from '../../models/normalizedModels';
-import { BoardState } from '../../store/reducers/boardReducer';
 import { Store } from '../../store/reducers/reducers';
 import SectionList from './components/SectionList';
 

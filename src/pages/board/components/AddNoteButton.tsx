@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import * as Mui from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import ClearIcon from '@material-ui/icons/Clear';
-import NoteListingWrapper from './NoteListingWrapper';
+import SectionElementWrapper from './SectionElementWrapper';
 import TextInput from '../../../components/form/TextInput';
 import Form from '../../../components/form/Form';
 import { Formik } from 'formik';
@@ -56,7 +56,7 @@ const AddNoteButton: FC<Props> = ({ sectionId }) => {
 	const renderComponent = () => {
 		if (formOpen) {
 			return (
-				<NoteListingWrapper>
+				<SectionElementWrapper>
 					<Formik initialValues={initialNote} onSubmit={(values) => handleSubmit(values)}>
 						<Form>
 							<Mui.Box className={classes.formContent}>
@@ -73,7 +73,7 @@ const AddNoteButton: FC<Props> = ({ sectionId }) => {
 							</Mui.Box>
 						</Form>
 					</Formik>
-				</NoteListingWrapper>
+				</SectionElementWrapper>
 			);
 		} else {
 			return (

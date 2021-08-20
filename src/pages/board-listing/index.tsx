@@ -1,5 +1,5 @@
 import * as Mui from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import { createStyles, makeStyles } from '@material-ui/core';
 import { FC, useEffect } from 'react';
 import BoardCard from './components/BoardCard';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,14 +8,15 @@ import { Store } from '../../store/reducers/reducers';
 import { BoardState } from '../../store/reducers/boardReducer';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import BoardForm from './components/BoardForm';
-import Modal from '../../components/Modal';
+import Modal from '../../components/ModalSwitch';
 import AddIcon from '@material-ui/icons/Add';
 import { openModal } from '../../store/actions/modalActions';
+import { useHistory } from 'react-router';
 
 type GetBoardListings = ReturnType<typeof getAllBoards>;
 type OpenModal = ReturnType<typeof openModal>;
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme: Mui.Theme) =>
 	createStyles({
 		paper: {
 			width: 300,
@@ -31,6 +32,7 @@ const BoardListingPage: FC = () => {
 	useEffect(() => {
 		dispatch<GetBoardListings>(getAllBoards());
 	}, []);
+	const history = useHistory();
 
 	const classes = useStyles();
 
@@ -45,6 +47,9 @@ const BoardListingPage: FC = () => {
 			return <CircularProgress />;
 		}
 	};
+	const handleOpenModal = () => {
+		dispatch<OpenModal>(openModal(`/boards/m/create`));
+	};
 	return (
 		<Mui.Box mt={5}>
 			<Mui.Grid container>
@@ -55,7 +60,7 @@ const BoardListingPage: FC = () => {
 					{renderBoardCards()}
 					<Mui.Grid xs={4} item>
 						<Mui.Card>
-							<Mui.CardActionArea onClick={() => dispatch<OpenModal>(openModal())}>
+							<Mui.CardActionArea onClick={handleOpenModal}>
 								<Mui.CardActions>
 									<Mui.Icon aria-label="add new board">
 										<AddIcon />
@@ -67,11 +72,11 @@ const BoardListingPage: FC = () => {
 					</Mui.Grid>
 				</Mui.Grid>
 			</Mui.Grid>
-			<Modal>
+			{/* <Modal>
 				<Mui.Paper className={classes.paper}>
 					<BoardForm />
 				</Mui.Paper>
-			</Modal>
+			</Modal> */}
 		</Mui.Box>
 	);
 };

@@ -4,17 +4,17 @@ import { useSelector } from 'react-redux';
 import { Store } from '../../../store/reducers/reducers';
 import { NoteState } from '../../../store/reducers/noteReducer';
 import AddSectionButton from './AddSectionButton';
-import NoteListing from './NoteListing';
+import NoteCard from './NoteCard';
 
 type Props = {
 	sectionId: number;
 };
-const NoteListingList: FC<Props> = ({ sectionId }) => {
+const NoteCardList: FC<Props> = ({ sectionId }) => {
 	const { itemIds } = useSelector<Store, NoteState>((state) => state.noteReducer);
 	const renderNotes = () => {
 		if (itemIds.length > 0) {
 			return itemIds.map((id) => {
-				return <NoteListing key={id} noteId={id} />;
+				return <NoteCard key={id} noteId={id} />;
 			});
 		} else {
 			return <Mui.CircularProgress />;
@@ -23,4 +23,4 @@ const NoteListingList: FC<Props> = ({ sectionId }) => {
 	return <Mui.Box>{renderNotes()}</Mui.Box>;
 };
 
-export default NoteListingList;
+export default NoteCardList;

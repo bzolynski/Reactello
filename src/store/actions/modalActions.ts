@@ -1,11 +1,11 @@
 import { Dispatch } from 'redux';
 import * as actionTypes from '../actionTypes/modalActionTypes';
-export const openModal = (): void =>
+export const openModal = (path: string): void =>
 	((dispatch: Dispatch) => {
-		const isOpen = true;
 		dispatch({
 			type: actionTypes.OPEN_MODAL,
-			isOpen
+			path: path,
+			isOpen: true
 		});
 	}) as any;
 
@@ -14,6 +14,6 @@ export const closeModal = (): void =>
 		const isOpen = false;
 		dispatch({
 			type: actionTypes.CLOSE_MODAL,
-			isOpen
+			isOpen: false
 		});
 	}) as any;

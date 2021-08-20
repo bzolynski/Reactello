@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Mui.Theme) =>
 		}
 	})
 );
-const NoteListingWrapper: FC = ({ children }) => {
+const SectionElementWrapper: FC = ({ children }) => {
 	const classes = useStyles();
 
 	return (
@@ -24,4 +24,4 @@ const NoteListingWrapper: FC = ({ children }) => {
 	);
 };
 
-export default NoteListingWrapper;
+export default SectionElementWrapper;

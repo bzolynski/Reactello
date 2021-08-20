@@ -4,11 +4,11 @@ import { FC, useState } from 'react';
 import { Store } from '../../../store/reducers/reducers';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useDispatch, useSelector } from 'react-redux';
-import NoteListing from './NoteListing';
+import NoteCard from './NoteCard';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { NormalizedSection } from '../../../models/normalizedModels';
 import AddNoteButton from './AddNoteButton';
-import NoteListingList from './NoteListingList';
+import NoteCardList from './NoteCardList';
 import { deleteSection } from '../../../store/actions/sectionActions';
 
 type DeleteSection = ReturnType<typeof deleteSection>;
@@ -89,7 +89,7 @@ const Section: FC<Props> = ({ sectionId }) => {
 							</Mui.ListSubheader>
 						}
 					>
-						{section.notes.map((noteId) => <NoteListing key={noteId} noteId={noteId} />)}
+						{section.notes.map((noteId) => <NoteCard key={noteId} noteId={noteId} />)}
 						{/* <NoteListingList sectionId={sectionId} /> */}
 						<AddNoteButton sectionId={sectionId} />
 					</Mui.List>
@@ -97,7 +97,7 @@ const Section: FC<Props> = ({ sectionId }) => {
 			);
 		}
 	};
-
+	
 	return <Mui.Box>{renderSection()}</Mui.Box>;
 };
 

@@ -5,11 +5,14 @@ import { Store } from '../../../store/reducers/reducers';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { NormalizedNote } from '../../../models/normalizedModels';
-import NoteListingWrapper from './NoteListingWrapper';
+import SectionElementWrapper from './SectionElementWrapper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { deleteNote } from '../../../store/actions/noteActions';
+import { useHistory } from 'react-router';
+import { openModal } from '../../../store/actions/modalActions';
 
 type DeleteNote = ReturnType<typeof deleteNote>;
+type OpenModal = ReturnType<typeof openModal>;
 
 const useStyles = makeStyles((theme: Mui.Theme) =>
 	createStyles({
@@ -25,7 +28,7 @@ const useStyles = makeStyles((theme: Mui.Theme) =>
 type Props = {
 	noteId: number;
 };
-const NoteListing: FC<Props> = ({ noteId }) => {
+const NoteCard: FC<Props> = ({ noteId }) => {
 	const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null);
 	const note = useSelector<Store, NormalizedNote>((state) => state.noteReducer.items[noteId]);
 	const dispatch = useDispatch();
@@ -41,14 +44,23 @@ const NoteListing: FC<Props> = ({ noteId }) => {
 		dispatch<DeleteNote>(deleteNote(noteId, note.sectionId));
 		handleClosePopover();
 	};
+	const handleOpenNoteDetails = () => {
+		dispatch<OpenModal>(openModal(`m/note/${noteId}`));
+	};
 
 	const renderNote = () => {
 		if (note == null) {
 			return <Mui.Box />;
 		} else {
 			return (
-				<NoteListingWrapper key={note.id}>
-					<Mui.ListItem className={classes.listItem} key={note.id} dense button>
+				<SectionElementWrapper key={note.id}>
+					<Mui.ListItem
+						className={classes.listItem}
+						key={note.id}
+						dense
+						button
+						onClick={handleOpenNoteDetails}
+					>
 						{/* <Mui.ListItemIcon>
 							<Mui.Checkbox edge="start" tabIndex={-1} disableRipple />
 						</Mui.ListItemIcon> */}
@@ -78,11 +90,11 @@ const NoteListing: FC<Props> = ({ noteId }) => {
 							</Mui.Popover>
 						</Mui.ListItemSecondaryAction>
 					</Mui.ListItem>
-				</NoteListingWrapper>
+				</SectionElementWrapper>
 			);
 		}
 	};
 	return <Mui.Box>{renderNote()}</Mui.Box>;
 };
 
-export default NoteListing;
+export default NoteCard;

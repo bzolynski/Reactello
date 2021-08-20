@@ -45,7 +45,7 @@ const BoardCard: FC<Props> = ({ boardId }) => {
 	const dispatch = useDispatch();
 	const redirectToBoard = () => {
 		dispatch<SetCurrentBoard>(setCurrentBoard(boardId));
-		history.push(`/boards/${boardId}/${board.name}`);
+		history.push(`/board/${boardId}/`);
 	};
 	return (
 		<Mui.Box>
