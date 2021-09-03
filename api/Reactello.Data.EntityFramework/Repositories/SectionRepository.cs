@@ -25,5 +25,14 @@ namespace Reactello.Data.EntityFramework.Repositories
                 .Include(x => x.Notes)
                 .ToListAsync();
         }
+
+        public async Task<Section> UpdateName(int sectionId, string name)
+        {
+            var section = await _sections.FindAsync(sectionId);
+            section.Name = name;
+            var result = _sections.Update(section);
+            await UnitOfWork.Commit();
+            return result.Entity;
+        }
     }
 }

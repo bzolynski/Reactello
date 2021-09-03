@@ -35,6 +35,12 @@ namespace Reactello.Api.Controllers
             throw new NotImplementedException();
         }
 
+        [HttpPatch("updateName")]
+        public async Task<ActionResult<UpdateSectionNameDto>> UpdateName([FromBody] UpdateSectionNameDto updateSectionName)
+        {
+            return await Mediator.Send(new UpdateSectionNameCommand(updateSectionName));
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> Delete(int id)
         {

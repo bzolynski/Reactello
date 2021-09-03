@@ -11,6 +11,7 @@ namespace Reactello.Application.Mappings
             CreateMap<Section, SectionDto>();
             CreateMap<CreateSectionDto, Section>();
             CreateMap<UpdateSectionDto, Section>();
+            CreateMap<Section, UpdateSectionNameDto>();
         }
     }
 }

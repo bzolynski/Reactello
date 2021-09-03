@@ -21,17 +21,17 @@ namespace Reactello.Api.Controllers
         {
             return await Mediator.Send(new GetNoteQuery(id));
         }
-
+        
         [HttpPost]
         public async Task<ActionResult<NoteDto>> Create([FromBody] CreateNoteDto createNote)
         {
             return await Mediator.Send(new CreateNoteCommand(createNote));
         }
 
-        [HttpPut("{id}")]
-        public void Update(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<ActionResult<NoteDto>> Update([FromBody] UpdateNoteDto note)
         {
-            throw new NotImplementedException();
+            return await Mediator.Send(new UpdateNoteCommand(note));
         }
 
         [HttpDelete("{id}")]
