@@ -41,6 +41,19 @@ export default (state = defaultState(), action: any): NoteState => {
 				itemIds: [ ...state.itemIds, data.note.id ]
 			};
 		}
+		case actionTypes.UPDATE_NOTE: {
+			const data: actionTypes.NoteTypes['UPDATE_NOTE'] = action;
+			const note = normalize(data.note);
+
+			return {
+				...state,
+				items: {
+					...state.items,
+					...note
+				},
+				itemIds: [ ...state.itemIds, data.note.id ]
+			};
+		}
 		case actionTypes.DELETE_NOTE: {
 			const data: actionTypes.NoteTypes['DELETE_NOTE'] = action;
 			const { [data.noteId]: removed, ...items } = state.items;

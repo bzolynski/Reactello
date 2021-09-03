@@ -28,6 +28,11 @@ const useStyles = makeStyles((theme: Mui.Theme) =>
 			justifyContent: 'space-between',
 			alignItems: 'center',
 			paddingTop: theme.spacing(1)
+		},
+		initialButton: {
+			'& span': {
+				fontSize: '13px'
+			}
 		}
 	})
 );
@@ -77,9 +82,9 @@ const AddNoteButton: FC<Props> = ({ sectionId }) => {
 			);
 		} else {
 			return (
-				<Mui.ListItem dense button onClick={() => setFormOpen(true)}>
+				<Mui.ListItem className={classes.initialButton} dense button onClick={() => setFormOpen(true)}>
 					<Mui.ListItemIcon>
-						<AddIcon />
+						<AddIcon fontSize="small" />
 					</Mui.ListItemIcon>
 					<Mui.ListItemText primary="Create note" />
 				</Mui.ListItem>

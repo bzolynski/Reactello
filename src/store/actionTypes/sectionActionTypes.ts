@@ -1,9 +1,10 @@
-import { Section } from '../../models/section';
+import { Section, SectionUpdateName } from '../../models/section';
 
 export const CREATE_SECTION = 'CREATE_SECTION';
 export const DELETE_SECTION = 'DELETE_SECTION';
 export const ADD_NOTE_TO_SECTION = 'ADD_NOTE_TO_SECTION';
 export const REMOVE_NOTE_FROM_SECTION = 'REMOVE_NOTE_FROM_SECTION';
+export const UPDATE_SECTION_NAME = 'UPDATE_SECTION_NAME';
 export const STORE_SECTIONS = 'STORE_SECTIONS';
 
 export interface SectionTypes {
@@ -23,5 +24,8 @@ export interface SectionTypes {
 	REMOVE_NOTE_FROM_SECTION: {
 		sectionId: number;
 		noteId: number;
+	};
+	UPDATE_SECTION_NAME: {
+		sectionUpdateName: SectionUpdateName;
 	};
 }

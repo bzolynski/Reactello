@@ -17,7 +17,17 @@ type OpenModal = ReturnType<typeof openModal>;
 const useStyles = makeStyles((theme: Mui.Theme) =>
 	createStyles({
 		listItem: {
-			borderRadius: 'inherit'
+			borderRadius: 'inherit',
+			'& span': {
+				wordBreak: 'break-all',
+				fontSize: '13px'
+			},
+			'& p': {
+				textOverflow: 'ellipsis',
+				whiteSpace: 'nowrap',
+				overflow: 'hidden',
+				fontSize: '11px'
+			}
 		},
 		popoverContent: {
 			padding: 6
@@ -64,10 +74,10 @@ const NoteCard: FC<Props> = ({ noteId }) => {
 						{/* <Mui.ListItemIcon>
 							<Mui.Checkbox edge="start" tabIndex={-1} disableRipple />
 						</Mui.ListItemIcon> */}
-						<Mui.ListItemText id={note.id.toString()} primary={note.title} secondary={'jakiś tekst'} />
+						<Mui.ListItemText id={note.id.toString()} primary={note.title} secondary={note.description} />
 						<Mui.ListItemSecondaryAction>
-							<Mui.IconButton edge="end" aria-label="comments" onClick={handleOpenPopover}>
-								<MoreVertIcon />
+							<Mui.IconButton size="small" edge="end" aria-label="comments" onClick={handleOpenPopover}>
+								<MoreVertIcon fontSize="small" />
 							</Mui.IconButton>
 							<Mui.Popover
 								open={Boolean(anchorEl)}

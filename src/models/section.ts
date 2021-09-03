@@ -7,6 +7,20 @@ export interface SectionCreate {
 	position: number;
 	boardId: number;
 }
+
+export interface SectionUpdateName {
+	id: number;
+	name: string;
+}
+
+export interface SectionUpdate {
+	id: number;
+	name: string;
+	color: string;
+	position: number;
+	boardId: number;
+}
+
 export interface Section {
 	id: number;
 	name: string;

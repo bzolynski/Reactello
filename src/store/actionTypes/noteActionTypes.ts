@@ -4,6 +4,7 @@ export const STORE_NOTES = 'STORE_NOTES';
 export const CREATE_NOTE = 'CREATE_NOTE';
 export const DELETE_NOTE = 'DELETE_NOTE';
 export const DELETE_SECTION_NOTES = 'DELETE_SECTION_NOTES';
+export const UPDATE_NOTE = 'UPDATE_NOTE';
 
 export interface NoteTypes {
 	STORE_NOTES: {
@@ -17,5 +18,8 @@ export interface NoteTypes {
 	};
 	DELETE_SECTION_NOTES: {
 		sectionId: number;
+	};
+	UPDATE_NOTE: {
+		note: Note;
 	};
 }

@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createMuiTheme, ThemeOptions } from '@material-ui/core/';
 
 export const theme = createMuiTheme({
 	palette: {
@@ -6,7 +6,10 @@ export const theme = createMuiTheme({
 			main: '#3F525B'
 		},
 		secondary: {
-			main: '#718F9D'
+			main: '#7b7b7b'
 		}
+	},
+	customColors: {
+		noteSectionBackground: '#F9FAFB'
 	}
 });

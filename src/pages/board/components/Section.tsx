@@ -9,19 +9,39 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { NormalizedSection } from '../../../models/normalizedModels';
 import AddNoteButton from './AddNoteButton';
 import NoteCardList from './NoteCardList';
-import { deleteSection } from '../../../store/actions/sectionActions';
+import { deleteSection, updateSectionName } from '../../../store/actions/sectionActions';
+import { Formik } from 'formik';
+import { SectionUpdateName } from '../../../models/section';
+import Form from '../../../components/form/Form';
+import TextAreaClickOnInput from '../../../components/form/TextAreaClickOnInput';
+import dataService from '../../../services/dataService';
 
 type DeleteSection = ReturnType<typeof deleteSection>;
+type UpdateSectionName = ReturnType<typeof updateSectionName>;
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
-			minWidth: 275,
-			margin: 10
-			/*backgroundColor: 'rgba(235, 236, 240, 0.8)'*/
+			width: 250,
+			margin: theme.spacing(0.75),
+			backgroundColor: theme.customColors.noteSectionBackground,
+			'& > ul': {
+				paddingBottom: theme.spacing(0.5)
+			}
+		},
+		titleBar: {
+			width: '100%'
 		},
 		popoverContent: {
 			padding: 6
+		},
+		titleInput: {
+			marginTop: theme.spacing(1),
+			'& textarea': {
+				color: theme.palette.secondary.main,
+				fontWeight: '500',
+				fontSize: '13px'
+			}
 		}
 	})
 );
@@ -37,6 +57,11 @@ const Section: FC<Props> = ({ sectionId }) => {
 	const dispatch = useDispatch();
 	const classes = useStyles();
 
+	const initialSection: SectionUpdateName = {
+		id: section.id,
+		name: section.name
+	};
+
 	const handleOpenPopover = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(e.currentTarget);
 	};
@@ -47,6 +72,10 @@ const Section: FC<Props> = ({ sectionId }) => {
 		dispatch<DeleteSection>(deleteSection(sectionId, section.boardId));
 		handleClosePopover();
 	};
+
+	const handleSubmit = (values: SectionUpdateName) => {
+		dispatch<UpdateSectionName>(updateSectionName(values));
+	};
 	const renderSection = () => {
 		if (section == null) {
 			return <Mui.CircularProgress />;
@@ -56,35 +85,50 @@ const Section: FC<Props> = ({ sectionId }) => {
 					<Mui.List
 						subheader={
 							<Mui.ListSubheader component="div">
-								<Mui.Box
-									display="flex"
-									flexDirection="row"
-									alignItems="center"
-									justifyContent="space-between"
-								>
-									{section.name}
-									<Mui.IconButton size="small" onClick={handleOpenPopover}>
-										<MoreHorizIcon />
-									</Mui.IconButton>
-									<Mui.Popover
-										open={Boolean(anchorEl)}
-										anchorEl={anchorEl}
-										onClose={handleClosePopover}
-										anchorOrigin={{
-											vertical: 'center',
-											horizontal: 'right'
-										}}
-										transformOrigin={{
-											vertical: 'center',
-											horizontal: 'left'
-										}}
-									>
-										<Mui.Box className={classes.popoverContent}>
-											<Mui.IconButton size="small" onClick={handleDeleteSection}>
-												<DeleteIcon color="secondary" fontSize="small" />
-											</Mui.IconButton>
-										</Mui.Box>
-									</Mui.Popover>
+								<Mui.Box display="flex" flexDirection="row" justifyContent="space-between">
+									<Formik onSubmit={(values) => handleSubmit(values)} initialValues={initialSection}>
+										{({ handleSubmit, submitForm, handleBlur }) => (
+											<Form className={classes.titleBar} onSubmit={handleSubmit}>
+												<TextAreaClickOnInput
+													blurOnEnter
+													customClasses={classes.titleInput}
+													name="name"
+													onBlur={(e) => {
+														handleBlur(e);
+														submitForm();
+													}}
+												/>
+											</Form>
+										)}
+									</Formik>
+									<Mui.Box>
+										<Mui.IconButton
+											style={{ marginTop: 3 }}
+											size="small"
+											onClick={handleOpenPopover}
+										>
+											<MoreHorizIcon />
+										</Mui.IconButton>
+										<Mui.Popover
+											open={Boolean(anchorEl)}
+											anchorEl={anchorEl}
+											onClose={handleClosePopover}
+											anchorOrigin={{
+												vertical: 'center',
+												horizontal: 'right'
+											}}
+											transformOrigin={{
+												vertical: 'center',
+												horizontal: 'left'
+											}}
+										>
+											<Mui.Box className={classes.popoverContent}>
+												<Mui.IconButton size="small" onClick={handleDeleteSection}>
+													<DeleteIcon color="secondary" fontSize="small" />
+												</Mui.IconButton>
+											</Mui.Box>
+										</Mui.Popover>
+									</Mui.Box>
 								</Mui.Box>
 							</Mui.ListSubheader>
 						}
@@ -97,7 +141,7 @@ const Section: FC<Props> = ({ sectionId }) => {
 			);
 		}
 	};
-	
+
 	return <Mui.Box>{renderSection()}</Mui.Box>;
 };
 

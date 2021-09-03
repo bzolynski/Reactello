@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		card: {
 			width: 275,
-			margin: 10
+			margin: theme.spacing(0.75)
 		}
 	})
 );

@@ -41,6 +41,23 @@ export default (state = defaultState(), action: any): SectionState => {
 				itemIds: [ ...state.itemIds, id ]
 			};
 		}
+		case actionTypes.UPDATE_SECTION_NAME: {
+			const data: actionTypes.SectionTypes['UPDATE_SECTION_NAME'] = action;
+			const id = data.sectionUpdateName.id;
+			const name = data.sectionUpdateName.name;
+
+			return {
+				...state,
+				items: {
+					...state.items,
+					[id]: {
+						...state.items[id],
+						name: name
+					}
+				},
+				itemIds: [ ...state.itemIds, id ]
+			};
+		}
 		case actionTypes.DELETE_SECTION: {
 			const data: actionTypes.SectionTypes['DELETE_SECTION'] = action;
 			const { [data.sectionId]: removed, ...items } = state.items;

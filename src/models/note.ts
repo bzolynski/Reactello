@@ -6,6 +6,13 @@ export interface NoteCreate {
 	description: string;
 	sectionId: number;
 }
+export interface NoteUpdate {
+	id: number;
+	title: string;
+	description: string;
+	position: number;
+	sectionId: number;
+}
 export interface Note {
 	id: number;
 	title: string;
