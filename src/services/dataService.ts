@@ -1,6 +1,6 @@
 import { Board, BoardForm } from '../models/board';
-import { NoteCreate, Note } from '../models/note';
-import { Section, SectionCreate } from '../models/section';
+import { NoteCreate, Note, NoteUpdate } from '../models/note';
+import { Section, SectionCreate, SectionUpdateName } from '../models/section';
 import { restService } from './serviceFactory';
 
 const Uri = {
@@ -36,6 +36,9 @@ const Notes = {
 	},
 	delete: async (id: number): Promise<boolean> => {
 		return await restService.delete<boolean>(Uri.Note + id);
+	},
+	update: async (note: NoteUpdate): Promise<Note> => {
+		return await restService.put<Note>(Uri.Note, note);
 	}
 };
 const Comments = {};
@@ -46,9 +49,9 @@ const Sections = {
 	delete: async (id: number): Promise<boolean> => {
 		return await restService.delete<boolean>(Uri.Section + id);
 	},
-	/*getForBoard: async (boardId: number): Promise<Section[]> => {
-		return await restService.get<Section[]>(Uri.Section + 'getForBoard/' + boardId);
-	}*/
+	updateName: async (sectionUpdate: SectionUpdateName): Promise<SectionUpdateName> => {
+		return await restService.patch<SectionUpdateName>(Uri.Section + 'updateName/', sectionUpdate);
+	}
 };
 
 export default { Boards, Notes, Comments, Sections };

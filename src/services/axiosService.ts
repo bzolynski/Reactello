@@ -17,6 +17,10 @@ const axiosService: RestService = {
 		var response = await axios.put<T>(url, body);
 		return response.data;
 	},
+	patch: async <T>(url: string, body: {}): Promise<T> => {
+		var response = await axios.patch<T>(url, body);
+		return response.data;
+	},
 	delete: async <T>(url: string): Promise<T> => {
 		var response = await axios.delete<T>(url);
 		return response.data;
