@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Reactello.Api.Models;
 using Reactello.Application.Commands.Sections;
 using Reactello.Application.Dtos.Sections;
 using Reactello.Application.Queries;
@@ -12,39 +13,73 @@ namespace Reactello.Api.Controllers
     public class SectionController : BaseController
     {
         [HttpGet("getAll")]
-        public async Task<ActionResult<IEnumerable<SectionDto>>> GetAll()
+        public async Task<ActionResult<Response>> GetAll()
         {
-            return await Mediator.Send(new GetAllSectionsQuery());
+            try
+            {
+                var sections = await Mediator.Send(new GetAllSectionsQuery());
+                return Models.Response.Success(sections);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
 
         [HttpGet("getForBoard/{boardId}")]
-        public async Task<ActionResult<IEnumerable<SectionDto>>> GetManyByBoard(int boardId)
+        public async Task<ActionResult<Response>> GetManyByBoard(int boardId)
         {
-            return await Mediator.Send(new GetSectionsByBoardQuery(boardId));
+            try
+            {
+                var sections = await Mediator.Send(new GetSectionsByBoardQuery(boardId));
+                return Models.Response.Success(sections);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
 
         [HttpPost]
-        public async Task<ActionResult<SectionDto>> Create([FromBody] CreateSectionDto createSection)
+        public async Task<ActionResult<Response>> Create([FromBody] CreateSectionDto createSection)
         {
-            return await Mediator.Send(new CreateSectionCommand(createSection));
-        }
-
-        [HttpPut]
-        public void Update([FromBody] string value)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                var section = await Mediator.Send(new CreateSectionCommand(createSection));
+                return Models.Response.Success(section);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
 
         [HttpPatch("updateName")]
-        public async Task<ActionResult<UpdateSectionNameDto>> UpdateName([FromBody] UpdateSectionNameDto updateSectionName)
+        public async Task<ActionResult<Response>> UpdateName([FromBody] UpdateSectionNameDto updateSectionName)
         {
-            return await Mediator.Send(new UpdateSectionNameCommand(updateSectionName));
+            try
+            {
+                var section = await Mediator.Send(new UpdateSectionNameCommand(updateSectionName));
+                return Models.Response.Success(section);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> Delete(int id)
+        public async Task<ActionResult<Response>> Delete(int id)
         {
-            return await Mediator.Send(new DeleteSectionCommand(id));
+            try
+            {
+                var result = await Mediator.Send(new DeleteSectionCommand(id));
+                return Models.Response.Success(result);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
     }
 }

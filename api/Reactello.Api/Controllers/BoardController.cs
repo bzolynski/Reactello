@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Reactello.Api.Models;
 using Reactello.Application.Commands.Boards;
 using Reactello.Application.Dtos.Boards;
 using Reactello.Application.Queries;
@@ -12,40 +13,59 @@ namespace Reactello.Api.Controllers
     public class BoardController : BaseController
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BoardDto>>> GetAll()
+        public async Task<ActionResult<Response>> GetAll()
         {
-            return await Mediator.Send(new GetAllBoardsQuery());
+            try
+            {
+                var boards = await Mediator.Send(new GetAllBoardsQuery());
+                return Models.Response.Success(boards);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
 
         [HttpGet("getAll/{id}")]
-        public async Task<ActionResult<BoardDto>> Get(int id)
+        public async Task<ActionResult<Response>> Get(int id)
         {
-            var cos = await Mediator.Send(new GetBoardQuery(id));
-            return await Mediator.Send(new GetBoardQuery(id));
-        }
-
-        [HttpGet("getForUpdate/{id}")]
-        public async Task<ActionResult<UpdateBoardDto>> GetForUpdate(int id)
-        {
-            return await Mediator.Send(new GetBoardForUpdateQuery(id));
+            try
+            {
+                var board = await Mediator.Send(new GetBoardQuery(id));
+                return Models.Response.Success(board);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
 
         [HttpPost]
-        public async Task<ActionResult<BoardDto>> Create([FromBody] CreateBoardDto createBoard)
+        public async Task<ActionResult<Response>> Create([FromBody] CreateBoardDto createBoard)
         {
-            return await Mediator.Send(new CreateBoardCommand(createBoard));
-        }
-
-        [HttpPut]
-        public void Update([FromBody] UpdateBoardDto updateBoard)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                var board = await Mediator.Send(new CreateBoardCommand(createBoard));
+                return Models.Response.Success(board);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> Delete(int id)
+        public async Task<ActionResult<Response>> Delete(int id)
         {
-            return await Mediator.Send(new DeleteBoardCommand(id));
+            try
+            {
+                var result = await Mediator.Send(new DeleteBoardCommand(id));
+                return Models.Response.Success(result);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
     }
 }

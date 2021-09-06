@@ -21,15 +21,8 @@ const initialBoard: BoardFormModel = {
 };
 const BoardForm: FC = () => {
 	const { id } = useParams<{ id: string }>();
-	const [ board, setBoard ] = useState<BoardFormModel>(initialBoard);
 	const dispatch = useDispatch();
 
-	useEffect(
-		() => {
-			if (id) dataService.Boards.getForUpdate(Number.parseInt(id)).then((board) => setBoard(board));
-		},
-		[ id ]
-	);
 	const handleSubmit = (values: BoardFormModel) => {
 		if (values.name != '') {
 			if (id) {
@@ -41,7 +34,7 @@ const BoardForm: FC = () => {
 		}
 	};
 	return (
-		<Formik enableReinitialize initialValues={board} onSubmit={(values) => handleSubmit(values)}>
+		<Formik enableReinitialize initialValues={initialBoard} onSubmit={(values) => handleSubmit(values)}>
 			{({ handleSubmit }) => (
 				<Form onSubmit={handleSubmit}>
 					<TextInput label="Name" name="name" />

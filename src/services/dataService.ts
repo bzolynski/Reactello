@@ -1,3 +1,4 @@
+import { Response } from '../models/response';
 import { Board, BoardForm } from '../models/board';
 import { NoteCreate, Note, NoteUpdate } from '../models/note';
 import { Section, SectionCreate, SectionUpdateName } from '../models/section';
@@ -11,46 +12,43 @@ const Uri = {
 };
 
 const Boards = {
-	create: async (board: BoardForm): Promise<Board> => {
-		return await restService.post<Board>(Uri.Board, board);
+	create: async (board: BoardForm): Promise<Response<Board>> => {
+		return await restService.post<Response<Board>>(Uri.Board, board);
 	},
-	getAll: async (): Promise<Board[]> => {
-		return await restService.get<Board[]>(Uri.Board);
+	getAll: async (): Promise<Response<Board[]>> => {
+		return await restService.get<Response<Board[]>>(Uri.Board);
 	},
-	get: async (id: number): Promise<Board> => {
-		return await restService.get<Board>(Uri.Board + 'getAll/' + id);
+	get: async (id: number): Promise<Response<Board>> => {
+		return await restService.get<Response<Board>>(Uri.Board + 'getAll/' + id);
 	},
-	getForUpdate: async (id: number): Promise<BoardForm> => {
-		return await restService.get<BoardForm>(Uri.Board + 'getForUpdate/' + id);
+	update: async (board: BoardForm): Promise<Response<Board>> => {
+		return await restService.put<Response<Board>>(Uri.Board + board.id, board);
 	},
-	update: async (board: BoardForm): Promise<Board> => {
-		return await restService.put<Board>(Uri.Board + board.id, board);
-	},
-	delete: async (id: number): Promise<boolean> => {
-		return await restService.delete<boolean>(Uri.Board + id);
+	delete: async (id: number): Promise<Response<boolean>> => {
+		return await restService.delete<Response<boolean>>(Uri.Board + id);
 	}
 };
 const Notes = {
-	create: async (note: NoteCreate): Promise<Note> => {
-		return await restService.post<Note>(Uri.Note, note);
+	create: async (note: NoteCreate): Promise<Response<Note>> => {
+		return await restService.post<Response<Note>>(Uri.Note, note);
 	},
-	delete: async (id: number): Promise<boolean> => {
-		return await restService.delete<boolean>(Uri.Note + id);
+	delete: async (id: number): Promise<Response<boolean>> => {
+		return await restService.delete<Response<boolean>>(Uri.Note + id);
 	},
-	update: async (note: NoteUpdate): Promise<Note> => {
-		return await restService.put<Note>(Uri.Note, note);
+	update: async (note: NoteUpdate): Promise<Response<Note>> => {
+		return await restService.put<Response<Note>>(Uri.Note, note);
 	}
 };
 const Comments = {};
 const Sections = {
-	create: async (section: SectionCreate): Promise<Section> => {
-		return await restService.post<Section>(Uri.Section, section);
+	create: async (section: SectionCreate): Promise<Response<Section>> => {
+		return await restService.post<Response<Section>>(Uri.Section, section);
 	},
-	delete: async (id: number): Promise<boolean> => {
-		return await restService.delete<boolean>(Uri.Section + id);
+	delete: async (id: number): Promise<Response<boolean>> => {
+		return await restService.delete<Response<boolean>>(Uri.Section + id);
 	},
-	updateName: async (sectionUpdate: SectionUpdateName): Promise<SectionUpdateName> => {
-		return await restService.patch<SectionUpdateName>(Uri.Section + 'updateName/', sectionUpdate);
+	updateName: async (sectionUpdate: SectionUpdateName): Promise<Response<SectionUpdateName>> => {
+		return await restService.patch<Response<SectionUpdateName>>(Uri.Section + 'updateName/', sectionUpdate);
 	}
 };
 

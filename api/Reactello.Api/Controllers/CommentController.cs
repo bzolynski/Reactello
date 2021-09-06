@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Reactello.Api.Models;
 using Reactello.Application.Commands.Comments;
 using Reactello.Application.Dtos.Comments;
 using Reactello.Application.Queries;
@@ -11,27 +12,46 @@ namespace Reactello.Api.Controllers
     public class CommentController : BaseController
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CommentDto>>> GetAll()
+        public async Task<ActionResult<Response>> GetAll()
         {
-            return await Mediator.Send(new GetAllCommentsQuery());
+            try
+            {
+                var comments = await Mediator.Send(new GetAllCommentsQuery());
+                return Models.Response.Success(comments);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
 
         [HttpPost]
-        public async Task<ActionResult<CommentDto>> Create([FromBody] CreateCommentDto createComment)
+        public async Task<ActionResult<Response>> Create([FromBody] CreateCommentDto createComment)
         {
-            return await Mediator.Send(new CreateCommentCommand(createComment));
+            try
+            {
+                var comment = await Mediator.Send(new CreateCommentCommand(createComment));
+                return Models.Response.Success(comment);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
 
-        [HttpPut]
-        public void Update([FromBody] string value)
-        {
-            throw new NotImplementedException();
-        }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> DeleteAsync(int id)
+        public async Task<ActionResult<Response>> DeleteAsync(int id)
         {
-            return await Mediator.Send(new DeleteCommentCommand(id));
+            try
+            {
+                var response = await Mediator.Send(new DeleteCommentCommand(id));
+                return Models.Response.Success(response);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
     }
 }

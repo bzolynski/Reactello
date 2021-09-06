@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Reactello.Api.Models;
 using Reactello.Application.Commands.Notes;
 using Reactello.Application.Dtos.Notes;
 using Reactello.Application.Queries;
@@ -11,33 +12,73 @@ namespace Reactello.Api.Controllers
     public class NoteController : BaseController
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<NoteDto>>> GetAll()
+        public async Task<ActionResult<Response>> GetAll()
         {
-            return await Mediator.Send(new GetAllNotesQuery());
+            try
+            {
+                var notes = await Mediator.Send(new GetAllNotesQuery());
+                return Models.Response.Success(notes);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<NoteDto>> Get(int id)
+        public async Task<ActionResult<Response>> Get(int id)
         {
-            return await Mediator.Send(new GetNoteQuery(id));
+            try
+            {
+                var note = await Mediator.Send(new GetNoteQuery(id));
+                return Models.Response.Success(note);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
-        
+
         [HttpPost]
-        public async Task<ActionResult<NoteDto>> Create([FromBody] CreateNoteDto createNote)
+        public async Task<ActionResult<Response>> Create([FromBody] CreateNoteDto createNote)
         {
-            return await Mediator.Send(new CreateNoteCommand(createNote));
+            try
+            {
+                var note = await Mediator.Send(new CreateNoteCommand(createNote));
+                return Models.Response.Success(note);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
 
         [HttpPut]
-        public async Task<ActionResult<NoteDto>> Update([FromBody] UpdateNoteDto note)
+        public async Task<ActionResult<Response>> Update([FromBody] UpdateNoteDto note)
         {
-            return await Mediator.Send(new UpdateNoteCommand(note));
+            try
+            {
+                var updatedNote = await Mediator.Send(new UpdateNoteCommand(note));
+                return Models.Response.Success(updatedNote);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> Delete(int id)
+        public async Task<ActionResult<Response>> Delete(int id)
         {
-            return await Mediator.Send(new DeleteNoteCommand(id));
+            try
+            {
+                var result = await Mediator.Send(new DeleteNoteCommand(id));
+                return Models.Response.Success(result);
+            }
+            catch (Exception ex)
+            {
+                return Models.Response.Error(ex.Message);
+            }
         }
     }
 }
