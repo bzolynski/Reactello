@@ -21,7 +21,8 @@
     "jsx": "react-jsx",
     "typeRoots": [
       ".src/modules"
-    ]
+    ],
+    "baseUrl": "src"
   },
   "include": [
     "src"

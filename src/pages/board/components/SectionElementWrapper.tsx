@@ -1,27 +1,14 @@
 import { FC } from 'react';
-import * as Mui from '@material-ui/core';
-import { createStyles, makeStyles } from '@material-ui/styles';
+import * as Mui from '@mui/material';
+import styled from 'styled-components';
 
-const useStyles = makeStyles((theme: Mui.Theme) =>
-	createStyles({
-		paper: {
-			margin: 8,
-			marginTop: 6,
-			marginBottom: 6,
-			'& li': {
-				borderRadius: 'inherit'
-			}
-		}
-	})
-);
+const Wrapper = styled('div')(({ theme }) => ({
+	margin: theme.spacing(1),
+	borderRadius: theme.shape.borderRadius
+}));
+
 const SectionElementWrapper: FC = ({ children }) => {
-	const classes = useStyles();
-
-	return (
-		<Mui.Paper elevation={2} className={classes.paper}>
-			{children}
-		</Mui.Paper>
-	);
+	return <Wrapper>{children}</Wrapper>;
 };
 
 export default SectionElementWrapper;

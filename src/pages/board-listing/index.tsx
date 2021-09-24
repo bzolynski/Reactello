@@ -1,30 +1,17 @@
-import * as Mui from '@material-ui/core';
-import { createStyles, makeStyles } from '@material-ui/core';
+import * as Mui from '@mui/material';
 import { FC, useEffect } from 'react';
 import BoardCard from './components/BoardCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllBoards } from '../../store/actions/boardActions';
-import { Store } from '../../store/reducers/reducers';
-import { BoardState } from '../../store/reducers/boardReducer';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import BoardForm from './components/BoardForm';
-import Modal from '../../components/ModalSwitch';
-import AddIcon from '@material-ui/icons/Add';
-import { openModal } from '../../store/actions/modalActions';
+import { getAllBoards } from 'store/actions/boardActions';
+import { Store } from 'store/reducers/reducers';
+import { BoardState } from 'store/reducers/boardReducer';
+import CircularProgress from '@mui/material/CircularProgress';
+import AddIcon from '@mui/icons-material/Add';
+import { openModal } from 'store/actions/modalActions';
 import { useHistory } from 'react-router';
 
 type GetBoardListings = ReturnType<typeof getAllBoards>;
 type OpenModal = ReturnType<typeof openModal>;
-
-const useStyles = makeStyles((theme: Mui.Theme) =>
-	createStyles({
-		paper: {
-			width: 300,
-			backgroundColor: theme.palette.background.paper,
-			padding: theme.spacing(2, 4, 3)
-		}
-	})
-);
 
 const BoardListingPage: FC = () => {
 	const { itemIds: boardIds } = useSelector<Store, BoardState>((state) => ({ ...state.boardReducer }));
@@ -34,12 +21,10 @@ const BoardListingPage: FC = () => {
 	}, []);
 	const history = useHistory();
 
-	const classes = useStyles();
-
 	const renderBoardCards = () => {
 		if (boardIds.length > 0) {
 			return boardIds.map((id) => (
-				<Mui.Grid key={id} xs={4} item>
+				<Mui.Grid key={id} xs={3} item>
 					<BoardCard boardId={id} />
 				</Mui.Grid>
 			));
@@ -58,7 +43,7 @@ const BoardListingPage: FC = () => {
 				</Mui.Grid>
 				<Mui.Grid item container xs={9} spacing={1}>
 					{renderBoardCards()}
-					<Mui.Grid xs={4} item>
+					<Mui.Grid xs={3} item>
 						<Mui.Card>
 							<Mui.CardActionArea onClick={handleOpenModal}>
 								<Mui.CardActions>

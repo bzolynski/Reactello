@@ -1,4 +1,4 @@
-import { Note } from '../../models/note';
+import { Note } from 'models/note';
 
 export const STORE_NOTES = 'STORE_NOTES';
 export const CREATE_NOTE = 'CREATE_NOTE';

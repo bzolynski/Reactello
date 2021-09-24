@@ -1,43 +1,60 @@
 import { FC, useState } from 'react';
-import * as Mui from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import * as Mui from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import SectionForm from './SectionForm';
+import styled from 'styled-components';
+import SectionListElementWrapper from './SectionListElementWrapper';
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		card: {
-			width: 275,
-			margin: theme.spacing(0.75)
-		}
-	})
-);
-
+const StyledCardActionArea = styled('div')<{ expanded: boolean }>(({ theme, expanded }) => ({
+	borderRadius: theme.shape.borderRadius
+}));
+const NewSectionButton = styled('div')(({ theme }) => ({
+	transition: theme.transition.hoverBase,
+	cursor: 'pointer',
+	borderRadius: theme.shape.borderRadius,
+	display: 'flex',
+	flexDirection: 'row',
+	alignItems: 'center',
+	padding: theme.spacing(0.625),
+	marginBottom: theme.spacing(1),
+	'&:hover': {
+		backgroundColor: theme.palette.grey[100]
+	},
+	p: {
+		fontSize: '13px',
+		userSelect: 'none'
+	}
+}));
 const AddSectionButton: FC = () => {
 	const [ expanded, setExpanded ] = useState(false);
-	const classes = useStyles();
 
-	const handleExpandClick = (): void => {
+	const handleToogleExpand = (): void => {
 		setExpanded(!expanded);
+	};
+
+	const handleClickAway = () => {
+		if (expanded) setExpanded(false);
 	};
 
 	return (
 		<Mui.Box>
-			<Mui.Card className={classes.card}>
-				<Mui.CardActionArea component={'div'}>
-					<Mui.CardActions onClick={handleExpandClick}>
-						<Mui.Icon aria-label="add new board">
-							<AddIcon />
-						</Mui.Icon>
-						<Mui.Typography>Add section</Mui.Typography>
-					</Mui.CardActions>
-					<Mui.Collapse in={expanded} timeout="auto" unmountOnExit>
-						<Mui.CardContent>
-							<SectionForm callback={handleExpandClick} />
-						</Mui.CardContent>
-					</Mui.Collapse>
-				</Mui.CardActionArea>
-			</Mui.Card>
+			<SectionListElementWrapper>
+				<Mui.ClickAwayListener onClickAway={handleClickAway}>
+					<StyledCardActionArea expanded={expanded}>
+						<NewSectionButton onClick={handleToogleExpand}>
+							<Mui.Icon aria-label="add new board">
+								<AddIcon />
+							</Mui.Icon>
+							<Mui.Typography>Create section</Mui.Typography>
+						</NewSectionButton>
+						<Mui.Collapse in={expanded} timeout="auto" unmountOnExit>
+							<Mui.CardContent>
+								<SectionForm callback={handleToogleExpand} />
+							</Mui.CardContent>
+						</Mui.Collapse>
+					</StyledCardActionArea>
+				</Mui.ClickAwayListener>
+			</SectionListElementWrapper>
 		</Mui.Box>
 	);
 };

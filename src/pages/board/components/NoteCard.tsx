@@ -1,39 +1,43 @@
 import React, { FC, useEffect, useState } from 'react';
-import * as Mui from '@material-ui/core';
+import * as Mui from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { Store } from '../../../store/reducers/reducers';
-import { createStyles, makeStyles } from '@material-ui/styles';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { NormalizedNote } from '../../../models/normalizedModels';
+import { Store } from 'store/reducers/reducers';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { NormalizedNote } from 'models/normalizedModels';
 import SectionElementWrapper from './SectionElementWrapper';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { deleteNote } from '../../../store/actions/noteActions';
-import { useHistory } from 'react-router';
-import { openModal } from '../../../store/actions/modalActions';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { deleteNote } from 'store/actions/noteActions';
+import { openModal } from 'store/actions/modalActions';
+import NoteCardListItemWrapper from './NoteCardListItemWrapper';
+import styled from 'styled-components';
 
 type DeleteNote = ReturnType<typeof deleteNote>;
 type OpenModal = ReturnType<typeof openModal>;
 
-const useStyles = makeStyles((theme: Mui.Theme) =>
-	createStyles({
-		listItem: {
-			borderRadius: 'inherit',
-			'& span': {
-				wordBreak: 'break-all',
-				fontSize: '13px'
-			},
-			'& p': {
-				textOverflow: 'ellipsis',
-				whiteSpace: 'nowrap',
-				overflow: 'hidden',
-				fontSize: '11px'
-			}
-		},
-		popoverContent: {
-			padding: 6
-		}
-	})
-);
+const StyledListItem = styled(Mui.ListItem)(({ theme }) => ({
+	borderRadius: theme.shape.borderRadius,
+	'& span': {
+		wordBreak: 'break-all',
+		fontSize: '13px'
+	},
+	'& p': {
+		textOverflow: 'ellipsis',
+		whiteSpace: 'nowrap',
+		overflow: 'hidden',
+		fontSize: '11px'
+	}
+}));
+
+const OptionsButton = styled(Mui.IconButton)(({ theme }) => ({
+	':hover svg': {
+		zIndex: 10,
+		background: 'transparent'
+	},
+	':hover span': {
+		backgroundColor: theme.palette.grey[300],
+		transition: 'ease-in 0.2s'
+	}
+}));
 
 type Props = {
 	noteId: number;
@@ -42,7 +46,6 @@ const NoteCard: FC<Props> = ({ noteId }) => {
 	const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null);
 	const note = useSelector<Store, NormalizedNote>((state) => state.noteReducer.items[noteId]);
 	const dispatch = useDispatch();
-	const classes = useStyles();
 
 	const handleOpenPopover = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(e.currentTarget);
@@ -64,42 +67,47 @@ const NoteCard: FC<Props> = ({ noteId }) => {
 		} else {
 			return (
 				<SectionElementWrapper key={note.id}>
-					<Mui.ListItem
-						className={classes.listItem}
-						key={note.id}
-						dense
-						button
-						onClick={handleOpenNoteDetails}
-					>
-						{/* <Mui.ListItemIcon>
-							<Mui.Checkbox edge="start" tabIndex={-1} disableRipple />
-						</Mui.ListItemIcon> */}
-						<Mui.ListItemText id={note.id.toString()} primary={note.title} secondary={note.description} />
-						<Mui.ListItemSecondaryAction>
-							<Mui.IconButton size="small" edge="end" aria-label="comments" onClick={handleOpenPopover}>
-								<MoreVertIcon fontSize="small" />
-							</Mui.IconButton>
-							<Mui.Popover
-								open={Boolean(anchorEl)}
-								anchorEl={anchorEl}
-								onClose={handleClosePopover}
-								anchorOrigin={{
-									vertical: 'center',
-									horizontal: 'right'
-								}}
-								transformOrigin={{
-									vertical: 'center',
-									horizontal: 'left'
-								}}
-							>
-								<Mui.Box className={classes.popoverContent}>
-									<Mui.IconButton size="small" onClick={handleDeleteNote}>
-										<DeleteIcon color="secondary" fontSize="small" />
-									</Mui.IconButton>
-								</Mui.Box>
-							</Mui.Popover>
-						</Mui.ListItemSecondaryAction>
-					</Mui.ListItem>
+					<NoteCardListItemWrapper>
+						<StyledListItem key={note.id} dense /*button*/ onClick={handleOpenNoteDetails}>
+							{/* <Mui.ListItemIcon>
+								<Mui.Checkbox edge="start" tabIndex={-1} disableRipple />
+							</Mui.ListItemIcon> */}
+							<Mui.ListItemText
+								id={note.id.toString()}
+								primary={note.title}
+								secondary={note.description}
+							/>
+							<Mui.ListItemSecondaryAction>
+								<OptionsButton
+									size="small"
+									edge="end"
+									aria-label="note-card-options"
+									onClick={handleOpenPopover}
+								>
+									<MoreVertIcon fontSize="small" />
+								</OptionsButton>
+								<Mui.Popover
+									open={Boolean(anchorEl)}
+									anchorEl={anchorEl}
+									onClose={handleClosePopover}
+									anchorOrigin={{
+										vertical: 'center',
+										horizontal: 'right'
+									}}
+									transformOrigin={{
+										vertical: 'center',
+										horizontal: 'left'
+									}}
+								>
+									<Mui.Box sx={{ padding: 0.5 }}>
+										<Mui.IconButton size="small" onClick={handleDeleteNote}>
+											<DeleteIcon color="secondary" fontSize="small" />
+										</Mui.IconButton>
+									</Mui.Box>
+								</Mui.Popover>
+							</Mui.ListItemSecondaryAction>
+						</StyledListItem>
+					</NoteCardListItemWrapper>
 				</SectionElementWrapper>
 			);
 		}

@@ -1,13 +1,13 @@
 import { FC } from 'react';
-import * as Mui from '@material-ui/core';
+import * as Mui from '@mui/material';
 import { Formik } from 'formik';
-import TextInput from '../../../components/form/TextInput';
-import NumberInput from '../../../components/form/NumberInput';
-import { SectionCreate } from '../../../models/section';
+import TextInput from 'components/form/TextInput';
+import NumberInput from 'components/form/NumberInput';
+import { SectionCreate } from 'models/section';
 import { useDispatch, useSelector } from 'react-redux';
-import { Store } from '../../../store/reducers/reducers';
-import { createSection } from '../../../store/actions/sectionActions';
-import Form from '../../../components/form/Form';
+import { Store } from 'store/reducers/reducers';
+import { createSection } from 'store/actions/sectionActions';
+import Form from 'components/form/Form';
 
 type CreateSection = ReturnType<typeof createSection>;
 

@@ -1,5 +1,5 @@
-import { normalize } from '../../models/board';
-import { NormalizedBoard, NormalizedState } from '../../models/normalizedModels';
+import { normalize } from 'models/board';
+import { NormalizedBoard, NormalizedState } from 'models/normalizedModels';
 import * as actionTypes from '../actionTypes/boardActionTypes';
 
 export interface BoardState extends NormalizedState<NormalizedBoard> {
@@ -63,6 +63,7 @@ export default (state = defaultState(), action: any): BoardState => {
 			const board = { ...state.items[data.boardId] };
 			const indexToRemove = board.sections.indexOf(data.sectionId);
 			board.sections.splice(indexToRemove, 1);
+
 			return {
 				...state,
 				items: {

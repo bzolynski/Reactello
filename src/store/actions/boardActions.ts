@@ -1,10 +1,10 @@
-import { Board, BoardForm } from '../../models/board';
+import { BoardForm } from 'models/board';
 import { Dispatch } from 'redux';
-import dataService from '../../services/dataService';
+import dataService from 'services/dataService';
 import * as boardActionTypes from '../actionTypes/boardActionTypes';
 import * as sectionActionTypes from '../actionTypes/sectionActionTypes';
 import * as noteActionTypes from '../actionTypes/noteActionTypes';
-import { ResponseStatus } from '../../models/response';
+import { ResponseStatus } from 'models/response';
 
 export const getAllBoards = () =>
 	((dispatch: Dispatch) => {

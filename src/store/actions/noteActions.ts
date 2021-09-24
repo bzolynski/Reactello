@@ -1,9 +1,9 @@
 import { Dispatch } from 'redux';
-import dataService from '../../services/dataService';
+import dataService from 'services/dataService';
 import * as noteActionTypes from '../actionTypes/noteActionTypes';
 import * as sectionActionTypes from '../actionTypes/sectionActionTypes';
-import { NoteCreate, NoteUpdate } from '../../models/note';
-import { ResponseStatus } from '../../models/response';
+import { NoteCreate, NoteUpdate } from 'models/note';
+import { ResponseStatus } from 'models/response';
 
 export const createNote = (note: NoteCreate): void =>
 	((dispatch: Dispatch) => {

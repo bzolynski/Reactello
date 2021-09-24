@@ -1,34 +1,30 @@
-import { createStyles, makeStyles } from '@material-ui/core';
-import * as Mui from '@material-ui/core';
+import * as Mui from '@mui/material';
 import { useField } from 'formik';
-import { FC, MouseEvent } from 'react';
-import clsx from 'clsx';
+import { FC } from 'react';
+import styled from 'styled-components';
 
-const useStyles = makeStyles((theme: Mui.Theme) =>
-	createStyles({
-		root: {
-			width: '100%',
-			cursor: 'pointer',
-			'& textarea': {
-				cursor: 'inherit',
-				paddingTop: 2,
-				paddingBottom: 2,
-				paddingLeft: 3,
-				paddingRight: 3,
-				border: 'transparent 1px solid',
-				wordBreak: 'break-all'
-			},
-			'&:focus-within': {
-				cursor: 'text',
-				'& textarea': {
-					backgroundColor: 'white',
-					borderRadius: '3px',
-					borderColor: 'black'
-				}
-			}
+const CustomTextArea = styled(Mui.InputBase)(({ theme }) => ({
+	width: '100%',
+	cursor: 'pointer',
+	borderRadius: theme.spacing(0.3),
+
+	'& textarea': {
+		cursor: 'inherit',
+		padding: '2px 3px',
+		margin: '-2px -3px',
+		borderRadius: 'inherit',
+		border: 'transparent 1px solid',
+		transition: 'ease-out 0.1s'
+	},
+	'&:focus-within': {
+		cursor: 'text',
+		'& textarea': {
+			backgroundColor: 'white',
+			borderColor: 'black',
+			transition: 'ease-in 0.1s'
 		}
-	})
-);
+	}
+}));
 
 const handleBlurOnEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
 	if (e.key == 'Enter') {
@@ -48,20 +44,17 @@ type Props = {
 	name: string;
 	label?: string;
 	onBlur?: (event: any) => void;
-	customClasses?: string;
 	blurOnEnter?: boolean;
 };
-const TextAreaClickOnInput: FC<Props> = ({ customClasses, blurOnEnter, ...props }) => {
+const TextAreaClickOnInput: FC<Props> = ({ blurOnEnter, ...props }) => {
 	const [ field, meta ] = useField(props.name);
-	const classes = useStyles();
 
 	return (
-		<Mui.InputBase
+		<CustomTextArea
 			error={meta.touched && !!meta.error}
 			{...field}
 			{...props}
 			onBlur={(e) => (props.onBlur ? props.onBlur(e) : null)}
-			className={clsx(classes.root, customClasses)}
 			multiline
 			onKeyPress={blurOnEnter ? handleBlurOnEnter : undefined}
 			onMouseDown={handleOnMouseDown}

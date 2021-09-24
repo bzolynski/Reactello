@@ -1,9 +1,8 @@
-import * as Mui from '@material-ui/core';
+import * as Mui from '@mui/material';
 import { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Store } from '../../../store/reducers/reducers';
-import { NoteState } from '../../../store/reducers/noteReducer';
-import AddSectionButton from './AddSectionButton';
+import { Store } from 'store/reducers/reducers';
+import { NoteState } from 'store/reducers/noteReducer';
 import NoteCard from './NoteCard';
 
 type Props = {

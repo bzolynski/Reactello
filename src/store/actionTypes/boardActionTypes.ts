@@ -1,4 +1,4 @@
-import { Board } from '../../models/board';
+import { Board } from 'models/board';
 
 export const GET_ALL_BOARDS = 'GET_ALL_BOARDS';
 //export const GET_BOARD = 'GET_BOARD';

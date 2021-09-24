@@ -1,5 +1,5 @@
-import { normalize, Section } from '../../models/section';
-import { NormalizedModel, NormalizedSection, NormalizedState } from '../../models/normalizedModels';
+import { normalize } from 'models/section';
+import { NormalizedModel, NormalizedSection, NormalizedState } from 'models/normalizedModels';
 import * as actionTypes from '../actionTypes/sectionActionTypes';
 
 export interface SectionState extends NormalizedState<NormalizedSection> {}

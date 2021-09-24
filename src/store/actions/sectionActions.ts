@@ -1,10 +1,10 @@
-import { Section, SectionCreate, SectionUpdateName } from '../../models/section';
+import { SectionCreate, SectionUpdateName } from 'models/section';
 import { Dispatch } from 'redux';
-import dataService from '../../services/dataService';
+import dataService from 'services/dataService';
 import * as sectionActionTypes from '../actionTypes/sectionActionTypes';
 import * as noteActionTypes from '../actionTypes/noteActionTypes';
 import * as boardActionTypes from '../actionTypes/boardActionTypes';
-import { ResponseStatus } from '../../models/response';
+import { ResponseStatus } from 'models/response';
 
 export const createSection = (section: SectionCreate): void =>
 	((dispatch: Dispatch) => {
@@ -46,16 +46,16 @@ export const deleteSection = (sectionId: number, boardId: number): void =>
 		dataService.Sections.delete(sectionId).then((response) => {
 			if (response.responseStatus == ResponseStatus.success) {
 				dispatch({
+					type: boardActionTypes.REMOVE_SECTION_FROM_BOARD,
+					boardId: boardId,
+					sectionId: sectionId
+				});
+				dispatch({
 					type: sectionActionTypes.DELETE_SECTION,
 					sectionId: sectionId
 				});
 				dispatch({
 					type: noteActionTypes.DELETE_SECTION_NOTES,
-					sectionId: sectionId
-				});
-				dispatch({
-					type: boardActionTypes.REMOVE_SECTION_FROM_BOARD,
-					boardId: boardId,
 					sectionId: sectionId
 				});
 			} else {

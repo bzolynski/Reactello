@@ -1,24 +1,19 @@
-import * as Mui from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import * as Mui from '@mui/material';
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Store } from '../store/reducers/reducers';
-import { closeModal } from '../store/actions/modalActions';
-import { ModalState } from '../store/reducers/modalReducer';
+import { Store } from 'store/reducers/reducers';
+import { closeModal } from 'store/actions/modalActions';
+import { ModalState } from 'store/reducers/modalReducer';
 import { Switch, useHistory } from 'react-router';
+import styled from 'styled-components';
 type CloseModal = ReturnType<typeof closeModal>;
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: {
-			position: 'absolute',
-			top: '50%',
-			left: '50%',
-			transform: 'translate(-50%, -50%)',
-			
-		}
-	})
-);
+const ContentContainer = styled(Mui.Box)(({ theme }) => ({
+	position: 'absolute',
+	top: '50%',
+	left: '50%',
+	transform: 'translate(-50%, -50%)'
+}));
 
 type Props = {};
 const ModalSwitch: FC<Props> = ({ children }) => {
@@ -37,7 +32,6 @@ const ModalSwitch: FC<Props> = ({ children }) => {
 		},
 		[ path ]
 	);
-	const classes = useStyles();
 	const handleClose = () => {
 		dispatch<CloseModal>(closeModal());
 		const index = history.location.pathname.indexOf('m/');
@@ -53,7 +47,7 @@ const ModalSwitch: FC<Props> = ({ children }) => {
 				aria-labelledby="simple-modal-title"
 				aria-describedby="simple-modal-description"
 			>
-				<Mui.Box className={classes.root}>{isOpen ? children : null}</Mui.Box>
+				<ContentContainer>{isOpen ? children : null}</ContentContainer>
 			</Mui.Modal>
 		</Switch>
 	);

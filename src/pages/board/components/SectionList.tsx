@@ -1,8 +1,7 @@
-import * as Mui from '@material-ui/core';
+import * as Mui from '@mui/material';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { Store } from '../../../store/reducers/reducers';
-import { SectionState } from '../../../store/reducers/sectionReducer';
+import { Store } from 'store/reducers/reducers';
 import AddSectionButton from './AddSectionButton';
 import Section from './Section';
 

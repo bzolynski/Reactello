@@ -1,7 +1,7 @@
-import { Response } from '../models/response';
-import { Board, BoardForm } from '../models/board';
-import { NoteCreate, Note, NoteUpdate } from '../models/note';
-import { Section, SectionCreate, SectionUpdateName } from '../models/section';
+import { Response } from 'models/response';
+import { Board, BoardForm } from 'models/board';
+import { NoteCreate, Note, NoteUpdate } from 'models/note';
+import { Section, SectionCreate, SectionUpdateName } from 'models/section';
 import { restService } from './serviceFactory';
 
 const Uri = {

@@ -1,19 +1,18 @@
-import * as Mui from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import * as Mui from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import { FC } from 'react';
 import PlainLink from './PlainLink';
+import Search from './Search';
+import styled from 'styled-components';
 
-const useStyles = makeStyles({
-	toolBar: {
-		minHeight: 55
-	}
-});
+const ToolBarContainer = styled(Mui.Toolbar)(({ theme }) => ({
+	minHeight: 55,
+	background: theme.palette.primary.main
+}));
 const TopBar: FC = () => {
-	const styles = useStyles();
 	return (
 		<Mui.AppBar position="fixed">
-			<Mui.Toolbar className={styles.toolBar}>
+			<ToolBarContainer>
 				<Mui.IconButton edge="start" color="inherit" aria-label="menu">
 					<MenuIcon />
 				</Mui.IconButton>
@@ -22,7 +21,8 @@ const TopBar: FC = () => {
 				<PlainLink to="/boards">
 					<Mui.Button color="inherit">Boards</Mui.Button>
 				</PlainLink>
-			</Mui.Toolbar>
+				<Search />
+			</ToolBarContainer>
 		</Mui.AppBar>
 	);
 };

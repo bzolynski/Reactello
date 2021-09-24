@@ -1,4 +1,4 @@
-import { Section, SectionUpdateName } from '../../models/section';
+import { Section, SectionUpdateName } from 'models/section';
 
 export const CREATE_SECTION = 'CREATE_SECTION';
 export const DELETE_SECTION = 'DELETE_SECTION';

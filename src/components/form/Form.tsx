@@ -1,22 +1,17 @@
 import React, { FC } from 'react';
 import { Form as FormikForm } from 'formik';
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import styled from 'styled-components';
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: {
-			display: 'flex',
-			flexDirection: 'column'
-		}
-	})
-);
+const FlexForm = styled(FormikForm)(({ theme }) => ({
+	display: 'flex',
+	flexDirection: 'column'
+}));
 
 const Form: FC<React.FormHTMLAttributes<HTMLFormElement>> = (props: React.FormHTMLAttributes<HTMLFormElement>) => {
-	const classes = useStyles();
 	return (
-		<FormikForm autoComplete="off" className={classes.root} {...props}>
+		<FlexForm autoComplete="off" {...props}>
 			{props.children}
-		</FormikForm>
+		</FlexForm>
 	);
 };
 

@@ -1,5 +1,5 @@
-import { normalize } from '../../models/note';
-import { NormalizedState, NormalizedNote } from '../../models/normalizedModels';
+import { normalize } from 'models/note';
+import { NormalizedState, NormalizedNote } from 'models/normalizedModels';
 import * as actionTypes from '../actionTypes/noteActionTypes';
 
 export interface NoteState extends NormalizedState<NormalizedNote> {}
