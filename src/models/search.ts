@@ -1,8 +1,9 @@
+
 export enum ElementType {
-	board,
-	section,
-	note,
-	comment
+	board = 'board',
+	section = 'section',
+	note = 'note',
+	comment = 'comment'
 }
 
 export interface SearchBase {
