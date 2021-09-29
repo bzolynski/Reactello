@@ -13,16 +13,20 @@ import { SectionUpdateName } from 'models/section';
 import Form from 'components/form/Form';
 import SectionListElementWrapper from './SectionListElementWrapper';
 import TextAreaClickOnInput from 'components/form/TextAreaClickOnInput';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 type DeleteSection = ReturnType<typeof deleteSection>;
 type UpdateSectionName = ReturnType<typeof updateSectionName>;
 
-const StyledSubheader = styled(Mui.ListSubheader)(({ theme }) => ({
-	backgroundColor: theme.palette.custom.noteSectionBackground
+const StyledSubheader = styled(Mui.ListSubheader)<{ $bgColor: string }>(({ theme, $bgColor }) => ({
+	backgroundColor: $bgColor,
+	borderRadius: theme.shape.borderRadius
 }));
-
-const TitleInput = styled(TextAreaClickOnInput)(({ theme }) => ({
+const StyledList = styled(Mui.List)<{ $bgColor: string }>(({ theme, $bgColor }) => ({
+	backgroundColor: $bgColor,
+	borderRadius: theme.shape.borderRadius
+}));
+export const SectionTitleInput = styled(TextAreaClickOnInput)(({ theme }) => ({
 	marginTop: theme.spacing(1),
 	'& textarea': {
 		fontSize: '13px',
@@ -50,6 +54,8 @@ const Section: FC<Props> = ({ sectionId }) => {
 		id: section.id,
 		name: section.name
 	};
+	const theme = useTheme();
+	const bgColor = section.color !== '' ? section.color : theme.palette.custom.noteSectionBackground;
 
 	const handleOpenPopover = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(e.currentTarget);
@@ -71,14 +77,15 @@ const Section: FC<Props> = ({ sectionId }) => {
 		} else {
 			return (
 				<SectionListElementWrapper elevation={2}>
-					<Mui.List
+					<StyledList
+						$bgColor={bgColor}
 						subheader={
-							<StyledSubheader>
+							<StyledSubheader $bgColor={bgColor}>
 								<Mui.Box display="flex" flexDirection="row" justifyContent="space-between">
 									<Formik onSubmit={(values) => handleSubmit(values)} initialValues={initialSection}>
 										{({ handleSubmit, submitForm, handleBlur }) => (
 											<StyledForm onSubmit={handleSubmit}>
-												<TitleInput
+												<SectionTitleInput
 													blurOnEnter
 													name="name"
 													onBlur={(e) => {
@@ -120,7 +127,7 @@ const Section: FC<Props> = ({ sectionId }) => {
 						{section.notes.map((noteId) => <NoteCard key={noteId} noteId={noteId} />)}
 						{/* <NoteListingList sectionId={sectionId} /> */}
 						<AddNoteButton sectionId={sectionId} />
-					</Mui.List>
+					</StyledList>
 				</SectionListElementWrapper>
 			);
 		}

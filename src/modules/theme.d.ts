@@ -30,5 +30,9 @@ declare module 'styled-components' {
 		transition: {
 			hoverBase: string;
 		};
+		shape: {
+			borderRadius: '4px';
+			getBorderRadius: (num: number) => string;
+		};
 	}
 }

@@ -15,6 +15,7 @@ import Form from 'components/form/Form';
 import { NoteUpdate } from 'models/note';
 import { updateNote } from 'store/actions/noteActions';
 import styled from 'styled-components';
+import ColorPicker from 'components/ColorPicker'
 
 type CloseModal = ReturnType<typeof closeModal>;
 type UpdateNote = ReturnType<typeof updateNote>;
@@ -174,6 +175,7 @@ const Note: FC = () => {
 													<p>OP</p>
 												</Mui.Avatar>
 												<Mui.Typography>tu będzie input na comment</Mui.Typography>
+												<ColorPicker></ColorPicker>
 											</ContentRow>
 										</ContentLayout>
 									</Form>

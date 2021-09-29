@@ -4,6 +4,7 @@ import SectionElementWrapper from './SectionElementWrapper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import BaseInput from 'components/form/BaseInput';
+import CreateButton from 'components/form/CreateButton';
 import Form from 'components/form/Form';
 import { Formik } from 'formik';
 import { NoteCreate } from 'models/note';
@@ -14,7 +15,7 @@ import styled from 'styled-components';
 
 type CreateNote = ReturnType<typeof createNote>;
 
-const StyledCardActionArea = styled('div')<{ expanded: boolean }>(({ theme, expanded }) => ({
+const NewNoteWrapper = styled('div')(({ theme }) => ({
 	borderRadius: theme.shape.borderRadius
 }));
 
@@ -42,8 +43,8 @@ const FormWrapper = styled(NoteCardListItemWrapper)(({ theme }) => ({
 	}
 }));
 
-const ArrowIcon = styled(KeyboardArrowDownIcon)<{ expanded: boolean }>(({ theme, expanded }) => ({
-	transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+const ArrowIcon = styled(KeyboardArrowDownIcon)<{ $expanded: boolean }>(({ theme, $expanded }) => ({
+	transform: $expanded ? 'rotate(180deg)' : 'rotate(0deg)',
 	transition: theme.transition.hoverBase
 }));
 const StyledFormContent = styled(Mui.Box)(({ theme }) => ({
@@ -73,13 +74,6 @@ const PlainInput = styled(BaseInput)(({ theme }) => ({
 		color: theme.palette.secondary.main,
 		marginTop: theme.spacing(0.5),
 		marginBottom: theme.spacing(0.5)
-	}
-}));
-
-const CreateButton = styled(Mui.Button)(({ theme }) => ({
-	backgroundColor: theme.palette.primary.main,
-	':hover': {
-		backgroundColor: theme.palette.primary.dark
 	}
 }));
 
@@ -114,10 +108,10 @@ const AddNoteButton: FC<Props> = ({ sectionId }) => {
 	return (
 		<SectionElementWrapper>
 			<Mui.ClickAwayListener onClickAway={handleClickAway}>
-				<StyledCardActionArea expanded={expanded}>
+				<NewNoteWrapper>
 					<NewNoteButton onClick={handleToogleExpand}>
 						<Mui.Icon fontSize="small" aria-label="add new board">
-							<ArrowIcon expanded={expanded} fontSize="small" />
+							<ArrowIcon $expanded={expanded} fontSize="small" />
 						</Mui.Icon>
 						{expanded ? (
 							<Mui.Typography>Close</Mui.Typography>
@@ -135,19 +129,12 @@ const AddNoteButton: FC<Props> = ({ sectionId }) => {
 									</StyledFormContent>
 								</FormWrapper>
 								<StyledFormButtons>
-									<CreateButton
-										size="small"
-										variant="contained"
-										type="submit"
-										endIcon={<NoteAddIcon fontSize="small" />}
-									>
-										Create
-									</CreateButton>
+									<CreateButton />
 								</StyledFormButtons>
 							</Form>
 						</Formik>
 					</Mui.Collapse>
-				</StyledCardActionArea>
+				</NewNoteWrapper>
 			</Mui.ClickAwayListener>
 		</SectionElementWrapper>
 	);

@@ -4,7 +4,6 @@ import { Note } from './note';
 export interface SectionCreate {
 	name: string;
 	color: string;
-	position: number;
 	boardId: number;
 }
 
