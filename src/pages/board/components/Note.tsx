@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import * as Mui from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { NormalizedNote } from 'models/normalizedModels';
@@ -7,7 +7,8 @@ import { Store } from 'store/reducers/reducers';
 import EventNoteOutlinedIcon from '@mui/icons-material/EventNoteOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
-import { closeModal } from 'store/actions/modalActions';
+import { closeModal, openModal } from 'store/actions/modalActions';
+import { useHistory } from 'react-router';
 import CloseIcon from '@mui/icons-material/Close';
 import TextAreaClickOnInput from 'components/form/TextAreaClickOnInput';
 import { Formik } from 'formik';
@@ -15,30 +16,42 @@ import Form from 'components/form/Form';
 import { NoteUpdate } from 'models/note';
 import { updateNote } from 'store/actions/noteActions';
 import styled from 'styled-components';
-import ColorPicker from 'components/ColorPicker'
 
 type CloseModal = ReturnType<typeof closeModal>;
+type OpenModal = ReturnType<typeof openModal>;
 type UpdateNote = ReturnType<typeof updateNote>;
 
-const Wrapper = styled(Mui.Box)(({ theme }) => ({
-	minHeight: 280,
-	color: theme.palette.primary.main,
-	paddingTop: theme.spacing(3),
-	paddingBottom: theme.spacing(3),
-	backgroundColor: theme.palette.custom.noteSectionBackground,
-	borderRadius: theme.shape.borderRadius
-}));
+const Wrapper =
+	styled('div') <
+	{ $sectionColor: string } >
+	`
+	min-height: 280px;
+	color: ${(props) => props.theme.palette.primary.main}; 
+	padding: ${(props) => props.theme.spacing(1)};
+	background-color: ${(props) => props.$sectionColor};
+	border-radius: ${(props) => props.theme.shape.borderRadius}; 
+	display: flex; 
+	
 
-const Layout = styled('div')(({ theme }) => ({
-	display: 'grid',
-	gridTemplateColumns: '1fr 230px',
-	height: '100%',
-	width: '100%'
-}));
+`;
+const InsideWrapper = styled('div')`
+	background-color: ${(props) => props.theme.palette.custom.noteSectionBackground};
+	border-radius: ${(props) => props.theme.shape.borderRadius};
+	border: 0.1px solid lightgray;
+	padding-top: ${(props) => props.theme.spacing(1)};
+	padding-bottom: ${(props) => props.theme.spacing(1)};
+`;
 
-const Content = styled('div')(({ theme }) => ({
-	gridColumn: 1
-}));
+const Layout = styled('div')`
+	display: grid;
+	grid-template-columns: 1fr 230px;
+	height: 100%;
+	width: 100%; 
+`;
+
+const Content = styled('div')`
+	grid-column: 1; 
+`;
 
 const ContentLayout = styled('div')(({ theme }) => ({
 	display: 'grid',
@@ -99,15 +112,14 @@ const StyledCommentSectionBox = styled(Mui.Box)(({ theme }) => ({
 }));
 
 const Note: FC = () => {
-	const params = useParams<{ id: string }>();
-	const id = Number.parseInt(params.id);
-	const note = useSelector<Store, NormalizedNote>((state) => state.noteReducer.items[id]);
+	const params = useParams<{ boardId: string; noteId: string }>();
+	const boardId = Number.parseInt(params.boardId);
+	const noteId = Number.parseInt(params.noteId);
+	const note = useSelector<Store, NormalizedNote>((state) => state.noteReducer.items[noteId]);
+	const sectionColor = useSelector<Store, string>((state) => state.sectionReducer.items[note.sectionId].color);
 	const sectionName = useSelector<Store, string>((state) => state.sectionReducer.items[note.sectionId].name);
 	const dispatch = useDispatch();
-
-	const handleCloseModal = () => {
-		dispatch<CloseModal>(closeModal());
-	};
+	const history = useHistory();
 
 	const initialNote: NoteUpdate = {
 		id: note.id,
@@ -115,6 +127,14 @@ const Note: FC = () => {
 		description: note.description,
 		position: note.position,
 		sectionId: note.sectionId
+	};
+
+	const handleCloseModal = () => {
+		dispatch<CloseModal>(closeModal());
+		const index = history.location.pathname.indexOf('m/');
+		const root = history.location.pathname.substring(0, index);
+
+		history.replace(root);
 	};
 
 	const handleEditNote = (values: NoteUpdate) => {
@@ -126,68 +146,70 @@ const Note: FC = () => {
 			return <Mui.Typography>note not found</Mui.Typography>;
 		} else {
 			return (
-				<Wrapper>
-					<Layout>
-						<Content>
-							<Formik
-								initialValues={initialNote}
-								onSubmit={(values) => handleEditNote(values)}
-								validateOnBlur
-							>
-								{({ handleSubmit, handleBlur, submitForm }) => (
-									<Form onSubmit={handleSubmit}>
-										<ContentLayout>
-											<ContentRow>
-												<EventNoteOutlinedIcon className="icon" />
-												<StyledTextAreaClickOnInputTitle
-													blurOnEnter
-													name="title"
-													onBlur={(e) => {
-														handleBlur(e);
-														submitForm();
-													}}
-												/>
-											</ContentRow>
-											<ContentRow style={{ marginTop: -15 }}>
-												<br />
-												<Mui.Typography>on list: {sectionName}</Mui.Typography>
-											</ContentRow>
-											<ContentRow>
-												<DescriptionOutlinedIcon className="icon" />
-												<Mui.Typography>Description</Mui.Typography>
-											</ContentRow>
-											<ContentRow style={{ marginTop: -15 }}>
-												<br />
-												<StyledTextAreaClickOnInputDescription
-													name="description"
-													onBlur={(e) => {
-														handleBlur(e);
-														submitForm();
-													}}
-												/>
-											</ContentRow>
-											<ContentRow>
-												<ChatOutlinedIcon className="icon" />
-												<Mui.Typography>Activities</Mui.Typography>
-											</ContentRow>
-											<ContentRow>
-												<Mui.Avatar className="icon">
-													<p>OP</p>
-												</Mui.Avatar>
-												<Mui.Typography>tu będzie input na comment</Mui.Typography>
-												<ColorPicker></ColorPicker>
-											</ContentRow>
-										</ContentLayout>
-									</Form>
-								)}
-							</Formik>
-						</Content>
-						<SideBar>
-							<Mui.IconButton size="small" onClick={handleCloseModal}>
-								<CloseIcon fontSize="small" />
-							</Mui.IconButton>
-						</SideBar>
-					</Layout>
+				<Wrapper $sectionColor={sectionColor}>
+					<InsideWrapper>
+						<Layout>
+							<Content>
+								<Formik
+									initialValues={initialNote}
+									onSubmit={(values) => handleEditNote(values)}
+									validateOnBlur
+								>
+									{({ handleSubmit, handleBlur, submitForm }) => (
+										<Form onSubmit={handleSubmit}>
+											<ContentLayout>
+												<ContentRow>
+													<EventNoteOutlinedIcon className="icon" />
+													<StyledTextAreaClickOnInputTitle
+														blurOnEnter
+														name="title"
+														onBlur={(e) => {
+															handleBlur(e);
+															submitForm();
+														}}
+													/>
+												</ContentRow>
+												<ContentRow style={{ marginTop: -15 }}>
+													<br />
+													<Mui.Typography>on list: {sectionName}</Mui.Typography>
+												</ContentRow>
+												<ContentRow>
+													<DescriptionOutlinedIcon className="icon" />
+													<Mui.Typography>Description</Mui.Typography>
+												</ContentRow>
+												<ContentRow style={{ marginTop: -15 }}>
+													<br />
+													<StyledTextAreaClickOnInputDescription
+														name="description"
+														placeholder="Add more detailed description..."
+														onBlur={(e) => {
+															handleBlur(e);
+															submitForm();
+														}}
+													/>
+												</ContentRow>
+												<ContentRow>
+													<ChatOutlinedIcon className="icon" />
+													<Mui.Typography>Activities</Mui.Typography>
+												</ContentRow>
+												<ContentRow>
+													<Mui.Avatar className="icon">
+														<p>OP</p>
+													</Mui.Avatar>
+													<Mui.Typography>tu będzie input na comment</Mui.Typography>
+												</ContentRow>
+											</ContentLayout>
+										</Form>
+									)}
+								</Formik>
+							</Content>
+							<SideBar>
+								<Mui.IconButton size="small" onClick={handleCloseModal}>
+									<CloseIcon fontSize="small" />
+								</Mui.IconButton>
+							</SideBar>
+						</Layout>
+					</InsideWrapper>
 				</Wrapper>
 			);
 		}

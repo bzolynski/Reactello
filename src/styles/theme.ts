@@ -27,7 +27,10 @@ const getCustomTheme = (): DefaultTheme => {
 		},
 		shape: {
 			borderRadius: '4px',
-			getBorderRadius: (num : number) => (`${4 * num}px`)
+			getBorderRadius: (num: number) => `${4 * num}px`
+		},
+		sizes: {
+			topBar: '55px'
 		}
 	};
 	return customTheme;

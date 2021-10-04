@@ -1,7 +1,6 @@
 import { Dispatch } from 'redux';
 import * as searchActionTypes from '../actionTypes/searchActionTypes';
 import { Store } from '../reducers/reducers';
-import { ElementType, SearchBase, SearchBoard, SearchNote, SearchSection } from 'models/search';
 import { SearchFilters } from 'store/reducers/searchReducer';
 export const openSearch = (): void =>
 	((dispatch: Dispatch) => {

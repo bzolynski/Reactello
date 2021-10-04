@@ -72,33 +72,31 @@ const AddSectionButton: FC = () => {
 	};
 
 	return (
-		<Mui.Box>
-			<SectionListElementWrapper>
-				<Mui.ClickAwayListener onClickAway={handleClickAway}>
-					<StyledCardActionArea>
-						<NewSectionButton onClick={handleToogleExpand}>
-							<Mui.Icon aria-label="add new board">
-								<AddIcon />
-							</Mui.Icon>
-							<Mui.Typography>Create section</Mui.Typography>
-						</NewSectionButton>
-						<Mui.Collapse in={expanded} timeout="auto" unmountOnExit>
-							<Mui.CardContent>
-								<Formik initialValues={initialSection} onSubmit={(values) => handleSubmit(values)}>
-									{({ handleSubmit }) => (
-										<Form onSubmit={handleSubmit}>
-											<TextInput label="Name" name="name" />
-											<ColorPicker getColor={getColor} />
-											<CreateButton />
-										</Form>
-									)}
-								</Formik>
-							</Mui.CardContent>
-						</Mui.Collapse>
-					</StyledCardActionArea>
-				</Mui.ClickAwayListener>
-			</SectionListElementWrapper>
-		</Mui.Box>
+		<SectionListElementWrapper>
+			<Mui.ClickAwayListener onClickAway={handleClickAway}>
+				<StyledCardActionArea>
+					<NewSectionButton onClick={handleToogleExpand}>
+						<Mui.Icon aria-label="add new board">
+							<AddIcon />
+						</Mui.Icon>
+						<Mui.Typography>Create section</Mui.Typography>
+					</NewSectionButton>
+					<Mui.Collapse in={expanded} timeout="auto" unmountOnExit>
+						<Mui.CardContent>
+							<Formik initialValues={initialSection} onSubmit={(values) => handleSubmit(values)}>
+								{({ handleSubmit }) => (
+									<Form onSubmit={handleSubmit}>
+										<TextInput label="Name" name="name" />
+										<ColorPicker getColor={getColor} />
+										<CreateButton />
+									</Form>
+								)}
+							</Formik>
+						</Mui.CardContent>
+					</Mui.Collapse>
+				</StyledCardActionArea>
+			</Mui.ClickAwayListener>
+		</SectionListElementWrapper>
 	);
 };
 

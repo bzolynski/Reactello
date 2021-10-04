@@ -8,7 +8,6 @@ import { BoardState } from 'store/reducers/boardReducer';
 import CircularProgress from '@mui/material/CircularProgress';
 import AddIcon from '@mui/icons-material/Add';
 import { openModal } from 'store/actions/modalActions';
-import { useHistory } from 'react-router';
 
 type GetBoardListings = ReturnType<typeof getAllBoards>;
 type OpenModal = ReturnType<typeof openModal>;
@@ -19,7 +18,6 @@ const BoardListingPage: FC = () => {
 	useEffect(() => {
 		dispatch<GetBoardListings>(getAllBoards());
 	}, []);
-	const history = useHistory();
 
 	const renderBoardCards = () => {
 		if (boardIds.length > 0) {
@@ -36,7 +34,7 @@ const BoardListingPage: FC = () => {
 		dispatch<OpenModal>(openModal(`/boards/m/create`));
 	};
 	return (
-		<Mui.Box mt={5}>
+		<div>
 			<Mui.Grid container>
 				<Mui.Grid item container xs={3}>
 					<p>lorem100 </p>
@@ -62,7 +60,7 @@ const BoardListingPage: FC = () => {
 					<BoardForm />
 				</Mui.Paper>
 			</Modal> */}
-		</Mui.Box>
+		</div>
 	);
 };
 

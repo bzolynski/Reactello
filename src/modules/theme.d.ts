@@ -17,10 +17,20 @@ declare module '@mui/material/styles' {
 			noteSectionBackground: string;
 		};
 	}
+
+	export type Variant = 'spread';
 }
 
 declare module '@mui/system/' {
-	export interface Theme {}
+	export interface Theme {
+		typography: {
+			spread: {
+				letterSpacing: '0.02em';
+				fontSize: '13px';
+				lineHeight: '1';
+			};
+		};
+	}
 	export interface ThemeOptions {}
 }
 /* styled-components */
@@ -34,5 +44,9 @@ declare module 'styled-components' {
 			borderRadius: '4px';
 			getBorderRadius: (num: number) => string;
 		};
+		sizes: {
+			topBar: string;
+		};
+		
 	}
 }

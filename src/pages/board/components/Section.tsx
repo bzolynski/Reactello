@@ -18,14 +18,18 @@ import styled, { useTheme } from 'styled-components';
 type DeleteSection = ReturnType<typeof deleteSection>;
 type UpdateSectionName = ReturnType<typeof updateSectionName>;
 
-const StyledSubheader = styled(Mui.ListSubheader)<{ $bgColor: string }>(({ theme, $bgColor }) => ({
-	backgroundColor: $bgColor,
-	borderRadius: theme.shape.borderRadius
-}));
 const StyledList = styled(Mui.List)<{ $bgColor: string }>(({ theme, $bgColor }) => ({
 	backgroundColor: $bgColor,
 	borderRadius: theme.shape.borderRadius
 }));
+const StyledSubheader = styled(Mui.ListSubheader)<{ $bgColor: string }>(({ theme, $bgColor }) => ({
+	backgroundColor: $bgColor,
+	borderRadius: theme.shape.borderRadius
+}));
+const CardContainer = styled('div')`
+	max-height: calc(80vh - 160px);
+	overflow: auto;
+`;
 export const SectionTitleInput = styled(TextAreaClickOnInput)(({ theme }) => ({
 	marginTop: theme.spacing(1),
 	'& textarea': {
@@ -71,69 +75,67 @@ const Section: FC<Props> = ({ sectionId }) => {
 	const handleSubmit = (values: SectionUpdateName) => {
 		dispatch<UpdateSectionName>(updateSectionName(values));
 	};
-	const renderSection = () => {
-		if (section == null) {
-			return <Mui.CircularProgress />;
-		} else {
-			return (
-				<SectionListElementWrapper elevation={2}>
-					<StyledList
-						$bgColor={bgColor}
-						subheader={
-							<StyledSubheader $bgColor={bgColor}>
-								<Mui.Box display="flex" flexDirection="row" justifyContent="space-between">
-									<Formik onSubmit={(values) => handleSubmit(values)} initialValues={initialSection}>
-										{({ handleSubmit, submitForm, handleBlur }) => (
-											<StyledForm onSubmit={handleSubmit}>
-												<SectionTitleInput
-													blurOnEnter
-													name="name"
-													onBlur={(e) => {
-														handleBlur(e);
-														submitForm();
-													}}
-												/>
-											</StyledForm>
-										)}
-									</Formik>
-									<Mui.Box>
-										<Mui.IconButton size="small" onClick={handleOpenPopover}>
-											<MoreHorizIcon />
-										</Mui.IconButton>
-										<Mui.Popover
-											open={Boolean(anchorEl)}
-											anchorEl={anchorEl}
-											onClose={handleClosePopover}
-											anchorOrigin={{
-												vertical: 'center',
-												horizontal: 'right'
-											}}
-											transformOrigin={{
-												vertical: 'center',
-												horizontal: 'left'
-											}}
-										>
-											<Mui.Box sx={{ padding: 0.5 }}>
-												<Mui.IconButton size="small" onClick={handleDeleteSection}>
-													<DeleteIcon color="secondary" fontSize="small" />
-												</Mui.IconButton>
-											</Mui.Box>
-										</Mui.Popover>
-									</Mui.Box>
-								</Mui.Box>
-							</StyledSubheader>
-						}
-					>
-						{section.notes.map((noteId) => <NoteCard key={noteId} noteId={noteId} />)}
-						{/* <NoteListingList sectionId={sectionId} /> */}
-						<AddNoteButton sectionId={sectionId} />
-					</StyledList>
-				</SectionListElementWrapper>
-			);
-		}
-	};
+	if (section == null) {
+		return <Mui.CircularProgress />;
+	}
 
-	return <Mui.Box>{renderSection()}</Mui.Box>;
+	return (
+		<SectionListElementWrapper elevation={2}>
+			<StyledList
+				$bgColor={bgColor}
+				subheader={
+					<StyledSubheader $bgColor={bgColor}>
+						<Mui.Box display="flex" flexDirection="row" justifyContent="space-between">
+							<Formik onSubmit={(values) => handleSubmit(values)} initialValues={initialSection}>
+								{({ handleSubmit, submitForm, handleBlur }) => (
+									<StyledForm onSubmit={handleSubmit}>
+										<SectionTitleInput
+											blurOnEnter
+											name="name"
+											onBlur={(e) => {
+												handleBlur(e);
+												submitForm();
+											}}
+										/>
+									</StyledForm>
+								)}
+							</Formik>
+							<Mui.Box>
+								<Mui.IconButton size="small" onClick={handleOpenPopover}>
+									<MoreHorizIcon />
+								</Mui.IconButton>
+								<Mui.Popover
+									open={Boolean(anchorEl)}
+									anchorEl={anchorEl}
+									onClose={handleClosePopover}
+									anchorOrigin={{
+										vertical: 'center',
+										horizontal: 'right'
+									}}
+									transformOrigin={{
+										vertical: 'center',
+										horizontal: 'left'
+									}}
+								>
+									<Mui.Box sx={{ padding: 0.5 }}>
+										<Mui.IconButton size="small" onClick={handleDeleteSection}>
+											<DeleteIcon color="secondary" fontSize="small" />
+										</Mui.IconButton>
+									</Mui.Box>
+								</Mui.Popover>
+							</Mui.Box>
+						</Mui.Box>
+					</StyledSubheader>
+				}
+			>
+				<CardContainer>
+					{section.notes.map((noteId) => <NoteCard key={noteId} noteId={noteId} />)}
+				</CardContainer>
+				<AddNoteButton sectionId={sectionId} />
+				{/* <NoteListingList sectionId={sectionId} /> */}
+			</StyledList>
+		</SectionListElementWrapper>
+	);
 };
 
 export default Section;

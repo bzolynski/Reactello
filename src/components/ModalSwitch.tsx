@@ -8,12 +8,15 @@ import { Switch, useHistory } from 'react-router';
 import styled from 'styled-components';
 type CloseModal = ReturnType<typeof closeModal>;
 
-const ContentContainer = styled(Mui.Box)(({ theme }) => ({
-	position: 'absolute',
-	top: '50%',
-	left: '50%',
-	transform: 'translate(-50%, -50%)'
-}));
+const ContentContainer = styled('div')`
+	position: absolute;
+	top: 50%;
+	left: 50%;   
+	transform: translate(-50%, -50%);
+	:focus-visible{
+		outline: none 
+	}
+`;
 
 type Props = {};
 const ModalSwitch: FC<Props> = ({ children }) => {
@@ -36,6 +39,7 @@ const ModalSwitch: FC<Props> = ({ children }) => {
 		dispatch<CloseModal>(closeModal());
 		const index = history.location.pathname.indexOf('m/');
 		const root = history.location.pathname.substring(0, index);
+
 		history.replace(root);
 	};
 

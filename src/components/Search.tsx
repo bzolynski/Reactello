@@ -5,17 +5,21 @@ import { Store } from 'store/reducers/reducers';
 import { SearchState, SearchFilters } from 'store/reducers/searchReducer';
 import SearchIcon from '@mui/icons-material/Search';
 import * as Mui from '@mui/material';
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import ChipCheckbox from 'components/ChipCheckbox';
-import { ElementType } from 'models/search';
+import { ElementType, SearchBase } from 'models/search';
+
+import SearchItem from './SearchItem';
+
 type OpenSearch = ReturnType<typeof openSearch>;
 type CloseSearch = ReturnType<typeof closeSearch>;
 type ChangeSearchText = ReturnType<typeof changeSearchText>;
 type ChangeSearchFilters = ReturnType<typeof changeSearchFilter>;
 
-const RootContainer = styled(Mui.Box)(({ theme }) => ({
-	position: 'relative'
-}));
+const RootContainer = styled('div')`
+	position: relative;
+	
+`;
 
 const SearchInput = styled(Mui.InputBase)<{ $isOpen: boolean }>(({ theme, $isOpen }) => ({
 	width: $isOpen ? 400 : 180,
@@ -25,21 +29,6 @@ const SearchInput = styled(Mui.InputBase)<{ $isOpen: boolean }>(({ theme, $isOpe
 	color: 'white',
 	transition: 'ease-out 0.2s'
 }));
-
-const testAnimate = () => keyframes` 
-	0% { 
-		background-color: yellow;
-	}
-	50% {
-		background-color: red;
-
-	}
-	100%{
-		background-color: blue;
-
-	}
-	
-`;
 
 const showSearchBarFrames = () => keyframes` 
 	0% { 
@@ -74,7 +63,7 @@ const ExpandingPanelContainer =
 	styled(Mui.Box) <
 	{ $isOpen: boolean } >
 	`
-	width: 600px; 
+	width: 550px; 
 	position: absolute;
 	left: 0px;  
 	top: ${(props) => (props.$isOpen ? '35px' : '0px')};
@@ -85,13 +74,47 @@ const PanelPaper = styled(Mui.Paper)`
 	width: 'inherit';
 	position: 'absolute';  
 	border-radius: ${(props) => props.theme.shape.borderRadius};
-	//top: isOpen ? 0 : -200,
+	background-color: #f8f8f8;
+`;
+
+const FiltersContainer = styled('div')`
+	padding: ${(props) => props.theme.spacing(0.5)};
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	& > div:not(:last-child){
+		margin-right: ${(props) => props.theme.spacing(1)};
+	}
+	& > div:nth-child(1){ 
+		margin-right: auto;
+	}
+`;
+
+const SectionGroup = styled('div')`
+	position: static;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	max-height: 70vh;
+	
+`;
+
+const Section = styled('div')`
+	display: flex;
+	flex-direction: column;
+	
+	& > div > span > span{
+		letter-spacing: 0.4em;
+	}
 
 `;
 
 type Props = {};
 const Search: FC<Props> = (props: Props) => {
-	const { isOpen, searchItems, searchFilters } = useSelector<Store, SearchState>((state) => state.searchReducer);
+	const { isOpen, searchItems, searchFilters, searchText } = useSelector<Store, SearchState>(
+		(state) => state.searchReducer
+	);
 	const searchInputRef = useRef<HTMLInputElement>();
 	const containerRef = useRef<Element>();
 	const dispatch = useDispatch();
@@ -103,16 +126,17 @@ const Search: FC<Props> = (props: Props) => {
 	const handleClickAway = () => {
 		if (isOpen) {
 			dispatch<CloseSearch>(closeSearch());
-			searchInputRef.current!.value = '';
 		}
 	};
 	const handleChange = () => {
+		if (!isOpen) dispatch<OpenSearch>(openSearch());
 		const inputValue = searchInputRef.current!.value;
 		dispatch<ChangeSearchText>(changeSearchText(inputValue));
 	};
 
 	const handleCheck = (name: string, checked: boolean) => {
 		let newSearchFilters: SearchFilters;
+
 		if (name === 'all') {
 			newSearchFilters = {
 				[ElementType.board]: checked,
@@ -128,6 +152,59 @@ const Search: FC<Props> = (props: Props) => {
 		}
 		dispatch<ChangeSearchFilters>(changeSearchFilter(newSearchFilters));
 	};
+
+	const renderSections = () => {
+		const groupped = searchItems.reduce(
+			(previous, current) => {
+				const group = current.type;
+				if (!previous[group]) previous[group] = [];
+				previous[group].push(current);
+				return previous;
+			},
+			{} as Record<ElementType, SearchBase[]>
+		);
+
+		if (groupped) {
+			return (
+				<Mui.Box display="flex" flexDirection="column">
+					{groupped.board != undefined ? (
+						<Section>
+							<Mui.Divider orientation="horizontal" flexItem>
+								<Mui.Typography variant="overline">Boards</Mui.Typography>
+							</Mui.Divider>
+							{groupped.board.map((x) => <SearchItem key={x.id + x.type} item={x} />)}
+						</Section>
+					) : null}
+					{groupped.section != undefined ? (
+						<Section>
+							<Mui.Divider orientation="horizontal" flexItem>
+								<Mui.Typography variant="overline">Sections</Mui.Typography>
+							</Mui.Divider>
+							{groupped.section.map((x) => <SearchItem key={x.id + x.type} item={x} />)}
+						</Section>
+					) : null}
+					{groupped.note != undefined ? (
+						<Section>
+							<Mui.Divider orientation="horizontal" flexItem>
+								<Mui.Typography variant="overline">Notes</Mui.Typography>
+							</Mui.Divider>
+							{groupped.note.map((x) => <SearchItem key={x.id + x.type} item={x} />)}
+						</Section>
+					) : null}
+					{groupped.comment != undefined ? (
+						<Section>
+							<Mui.Divider orientation="horizontal" flexItem>
+								<Mui.Typography variant="overline">Comments</Mui.Typography>
+							</Mui.Divider>
+							{groupped.comment.map((x) => <SearchItem key={x.id + x.type} item={x} />)}
+						</Section>
+					) : null}
+				</Mui.Box>
+			);
+		}
+		return <div />;
+	};
+
 	return (
 		<Mui.ClickAwayListener onClickAway={handleClickAway}>
 			<RootContainer onClick={(e) => handleClick(e)}>
@@ -136,6 +213,7 @@ const Search: FC<Props> = (props: Props) => {
 					inputRef={searchInputRef}
 					onChange={handleChange}
 					placeholder="Search..."
+					value={searchText}
 					endAdornment={
 						<Mui.InputAdornment position="end">
 							<SearchIcon fontSize="small" />
@@ -144,10 +222,12 @@ const Search: FC<Props> = (props: Props) => {
 				/>
 
 				<ExpandingPanelContainer $isOpen={isOpen} ref={containerRef}>
-					{/* <Mui.Slide direction="down" in={isOpen} container={containerRef.current}> */}
 					<PanelPaper elevation={3}>
-						<Mui.Grid container>
-							<Mui.Grid item sm={2}>
+						<FiltersContainer>
+							<Mui.Grid item>
+								<Mui.Typography>Select items to display:</Mui.Typography>
+							</Mui.Grid>
+							<Mui.Grid item>
 								<ChipCheckbox
 									name={'all'}
 									checked={
@@ -161,7 +241,7 @@ const Search: FC<Props> = (props: Props) => {
 									All
 								</ChipCheckbox>
 							</Mui.Grid>
-							<Mui.Grid item sm={2} alignItems="stretch">
+							<Mui.Grid item alignItems="stretch">
 								<ChipCheckbox
 									name={ElementType.board}
 									checked={searchFilters[ElementType.board]}
@@ -170,7 +250,7 @@ const Search: FC<Props> = (props: Props) => {
 									Boards
 								</ChipCheckbox>
 							</Mui.Grid>
-							<Mui.Grid item sm={2}>
+							<Mui.Grid item>
 								<ChipCheckbox
 									name={ElementType.section}
 									checked={searchFilters[ElementType.section]}
@@ -179,7 +259,7 @@ const Search: FC<Props> = (props: Props) => {
 									Sections
 								</ChipCheckbox>
 							</Mui.Grid>
-							<Mui.Grid item sm={2}>
+							<Mui.Grid item>
 								<ChipCheckbox
 									name={ElementType.note}
 									checked={searchFilters[ElementType.note]}
@@ -188,7 +268,7 @@ const Search: FC<Props> = (props: Props) => {
 									Notes
 								</ChipCheckbox>
 							</Mui.Grid>
-							<Mui.Grid item sm={2}>
+							<Mui.Grid item>
 								<ChipCheckbox
 									name={ElementType.comment}
 									checked={searchFilters[ElementType.comment]}
@@ -197,12 +277,9 @@ const Search: FC<Props> = (props: Props) => {
 									Comments
 								</ChipCheckbox>
 							</Mui.Grid>
-						</Mui.Grid>
-						<Mui.Box display="flex" flexDirection="column">
-							{searchItems.map((x) => <p key={x.title + x.id}>{x.title}</p>)}
-						</Mui.Box>
+						</FiltersContainer>
+						<SectionGroup>{renderSections()}</SectionGroup>
 					</PanelPaper>
-					{/* </Mui.Slide> */}
 				</ExpandingPanelContainer>
 			</RootContainer>
 		</Mui.ClickAwayListener>

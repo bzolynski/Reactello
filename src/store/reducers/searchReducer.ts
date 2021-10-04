@@ -1,5 +1,4 @@
 import { ElementType, SearchBase, SearchBoard, SearchNote, SearchSection } from 'models/search';
-import store from 'store/store';
 import * as actionTypes from '../actionTypes/searchActionTypes';
 
 export interface SearchFilters {
@@ -62,7 +61,6 @@ export default (state = defaultState(), action: any): SearchState => {
 			if (state.searchText !== '') {
 				const data: actionTypes.SearchTypes['FILTER_SEARCH_ITEMS'] = action;
 				const globalState = data.globalState;
-				console.log(state.searchText);
 				const upperCaseValue = state.searchText.toUpperCase();
 				if (state.searchFilters[ElementType.board])
 					for (const key in globalState.boardReducer.items) {
@@ -87,7 +85,8 @@ export default (state = defaultState(), action: any): SearchState => {
 								title: sectionItem.name,
 								notesCount: sectionItem.notes.length,
 								boardId: sectionItem.boardId,
-								type: ElementType.note
+								boardName: globalState.boardReducer.items[sectionItem.boardId].name,
+								type: ElementType.section
 							};
 							searchItems.push(searchSection);
 						}
@@ -99,12 +98,16 @@ export default (state = defaultState(), action: any): SearchState => {
 							noteItem.title.toUpperCase().includes(upperCaseValue) ||
 							noteItem.description.toUpperCase().includes(upperCaseValue)
 						) {
+							const boardId = globalState.sectionReducer.items[noteItem.sectionId].boardId;
 							const searchNote: SearchNote = {
 								id: noteItem.id,
 								title: noteItem.title,
 								commentsCount: noteItem.comments.length,
 								hasDescription: noteItem.description != '',
 								sectionId: noteItem.sectionId,
+								sectionName: globalState.sectionReducer.items[noteItem.sectionId].name,
+								boardId: boardId,
+								boardName: globalState.boardReducer.items[boardId].name,
 								type: ElementType.note
 							};
 							searchItems.push(searchNote);

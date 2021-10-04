@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { Paper } from '@mui/material';
+import { Paper, PaperProps } from '@mui/material';
 
 const Root = styled(Paper)(({ theme }) => ({
 	cursor: 'pointer',
@@ -14,8 +14,8 @@ const Root = styled(Paper)(({ theme }) => ({
 	}
 }));
 
-const NoteCardListItemWrapper: FC = ({ children }) => {
-	return <Root>{children}</Root>;
+const PaperWrapper: FC<PaperProps> = ({ children, ...props }) => {
+	return <Root {...props}>{children}</Root>;
 };
 
-export default NoteCardListItemWrapper;
+export default PaperWrapper;

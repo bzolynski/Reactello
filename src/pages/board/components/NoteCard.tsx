@@ -8,7 +8,7 @@ import SectionElementWrapper from './SectionElementWrapper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteNote } from 'store/actions/noteActions';
 import { openModal } from 'store/actions/modalActions';
-import NoteCardListItemWrapper from './NoteCardListItemWrapper';
+import PaperWrapper from '../../../components/PaperWrapper';
 import styled from 'styled-components';
 
 type DeleteNote = ReturnType<typeof deleteNote>;
@@ -46,7 +46,6 @@ const NoteCard: FC<Props> = ({ noteId }) => {
 	const [ anchorEl, setAnchorEl ] = useState<HTMLButtonElement | null>(null);
 	const note = useSelector<Store, NormalizedNote>((state) => state.noteReducer.items[noteId]);
 	const dispatch = useDispatch();
-
 	const handleOpenPopover = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(e.currentTarget);
 	};
@@ -67,7 +66,7 @@ const NoteCard: FC<Props> = ({ noteId }) => {
 		} else {
 			return (
 				<SectionElementWrapper key={note.id}>
-					<NoteCardListItemWrapper>
+					<PaperWrapper>
 						<StyledListItem key={note.id} dense /*button*/ onClick={handleOpenNoteDetails}>
 							{/* <Mui.ListItemIcon>
 								<Mui.Checkbox edge="start" tabIndex={-1} disableRipple />
@@ -107,7 +106,7 @@ const NoteCard: FC<Props> = ({ noteId }) => {
 								</Mui.Popover>
 							</Mui.ListItemSecondaryAction>
 						</StyledListItem>
-					</NoteCardListItemWrapper>
+					</PaperWrapper>
 				</SectionElementWrapper>
 			);
 		}

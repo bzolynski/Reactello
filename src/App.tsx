@@ -10,6 +10,7 @@ import Note from 'pages/board/components/Note';
 import { ThemeProvider } from 'styled-components';
 import { customTheme } from 'styles/index';
 import styled from 'styled-components';
+import { GlobalStyle } from 'styles/index';
 
 const BoardFormWrapper = styled(Mui.Paper)(({ theme }) => ({
 	width: 300,
@@ -20,6 +21,7 @@ const BoardFormWrapper = styled(Mui.Paper)(({ theme }) => ({
 const App: FC = () => {
 	return (
 		<ThemeProvider theme={customTheme}>
+			<GlobalStyle />
 			<Router>
 				<Switch>
 					<Layout>
@@ -37,7 +39,7 @@ const App: FC = () => {
 							<BoardForm />
 						</BoardFormWrapper>
 					</Route>
-					<Route path={'/board/:id/m/note/:id'}>
+					<Route path={'/board/:boardId/m/note/:noteId'}>
 						<Note />
 					</Route>
 				</ModalSwitch>

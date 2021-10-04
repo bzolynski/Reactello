@@ -4,14 +4,17 @@ import { FC } from 'react';
 import PlainLink from './PlainLink';
 import Search from './Search';
 import styled from 'styled-components';
-
-const ToolBarContainer = styled(Mui.Toolbar)(({ theme }) => ({
-	minHeight: 55,
-	background: theme.palette.primary.main
-}));
+const StyledAppBar = styled(Mui.AppBar)`
+	height: ${(props) => props.theme.sizes.topBar};
+	position: fixed;
+`;
+const ToolBarContainer = styled(Mui.Toolbar)`
+	min-height: ${(props) => props.theme.sizes.topBar};
+	background: ${(props) => props.theme.palette.primary.main};
+`;
 const TopBar: FC = () => {
 	return (
-		<Mui.AppBar position="fixed">
+		<Mui.AppBar>
 			<ToolBarContainer>
 				<Mui.IconButton edge="start" color="inherit" aria-label="menu">
 					<MenuIcon />

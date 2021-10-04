@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { Paper } from '@mui/material';
+import { Paper, PaperProps } from '@mui/material';
 
 const Root = styled(Paper)(({ theme }) => ({
 	width: 250,
@@ -10,11 +10,13 @@ const Root = styled(Paper)(({ theme }) => ({
 		paddingBottom: theme.spacing(0.5)
 	}
 }));
-type Props = {
-	elevation?: number;
-};
-const SectionListElementWrapper: FC<Props> = ({ children, elevation }) => {
-	return <Root elevation={elevation}>{children}</Root>;
+
+const SectionListElementWrapper: FC<PaperProps> = ({ children, ...props }) => {
+	return (
+		<div>
+			<Root {...props}>{children}</Root>
+		</div>
+	);
 };
 
 export default SectionListElementWrapper;

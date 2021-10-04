@@ -16,7 +16,7 @@ const SectionList: FC = () => {
 		});
 	};
 	return (
-		<Mui.Box display="flex">
+		<Mui.Box style={{ height: '100%' }} display="flex">
 			{renderSections()}
 			<AddSectionButton />
 		</Mui.Box>

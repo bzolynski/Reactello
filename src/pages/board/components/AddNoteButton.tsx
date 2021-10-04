@@ -10,7 +10,7 @@ import { Formik } from 'formik';
 import { NoteCreate } from 'models/note';
 import { createNote } from 'store/actions/noteActions';
 import { useDispatch } from 'react-redux';
-import NoteCardListItemWrapper from './NoteCardListItemWrapper';
+import PaperWrapper from '../../../components/PaperWrapper';
 import styled from 'styled-components';
 
 type CreateNote = ReturnType<typeof createNote>;
@@ -37,11 +37,7 @@ const NewNoteButton = styled('div')(({ theme }) => ({
 	}
 }));
 
-const FormWrapper = styled(NoteCardListItemWrapper)(({ theme }) => ({
-	'&&&': {
-		backgroundColor: 'red'
-	}
-}));
+const FormWrapper = styled(PaperWrapper)(({ theme }) => ({}));
 
 const ArrowIcon = styled(KeyboardArrowDownIcon)<{ $expanded: boolean }>(({ theme, $expanded }) => ({
 	transform: $expanded ? 'rotate(180deg)' : 'rotate(0deg)',

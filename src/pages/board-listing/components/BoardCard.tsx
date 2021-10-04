@@ -6,13 +6,10 @@ import ShareIcon from '@mui/icons-material/ShareOutlined';
 import React, { FC } from 'react';
 import tempBG from 'assets/tempBG.jpg';
 import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Store } from 'store/reducers/reducers';
 import { NormalizedBoard } from 'models/normalizedModels';
-import { setCurrentBoard } from 'store/actions/boardActions';
 import styled from 'styled-components';
-
-type SetCurrentBoard = ReturnType<typeof setCurrentBoard>;
 
 const Card = styled(Mui.Card)(({ theme }) => ({
 	maxWidth: '100%',
@@ -79,9 +76,7 @@ type Props = {
 const BoardCard: FC<Props> = ({ boardId }) => {
 	const board = useSelector<Store, NormalizedBoard>((state) => state.boardReducer.items[boardId]);
 	const history = useHistory();
-	const dispatch = useDispatch();
 	const redirectToBoard = () => {
-		dispatch<SetCurrentBoard>(setCurrentBoard(boardId));
 		history.push(`/board/${boardId}/`);
 	};
 	return (

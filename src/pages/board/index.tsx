@@ -1,27 +1,32 @@
-import { Box, CircularProgress } from '@mui/material';
-import { FC, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { FC, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { NormalizedBoard } from 'models/normalizedModels';
-import { Store } from 'store/reducers/reducers';
 import SectionList from './components/SectionList';
+import { setCurrentBoard } from 'store/actions/boardActions';
+import styled from 'styled-components';
+type SetCurrentBoard = ReturnType<typeof setCurrentBoard>;
+
+const Wrapper = styled('div')`
+	height: 100%;
+`;
 
 type Props = {};
 const BoardPage: FC<Props> = () => {
-	const board = useSelector<Store, NormalizedBoard>(
-		(state) => state.boardReducer.items[state.boardReducer.currentBoard!]
-	);
+	const dispatch = useDispatch();
 	const params = useParams<{ id: string }>();
 	const id = Number.parseInt(params.id);
 
-	if (board == null || board.id !== id) return <CircularProgress />;
+	useEffect(
+		() => {
+			dispatch<SetCurrentBoard>(setCurrentBoard(id));
+		},
+		[ id ]
+	);
 
 	return (
-		<Box mt={5}>
-			<Box display="flex">
-				<SectionList />
-			</Box>
-		</Box>
+		<Wrapper>
+			<SectionList />
+		</Wrapper>
 	);
 };
 
